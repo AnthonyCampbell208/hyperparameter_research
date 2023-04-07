@@ -177,7 +177,8 @@ def load_twin():
 
     T = df['treatment'].astype(int)
     Y = df['outcome']
-    X
+    X = df[]
+    is_discrete = True
     return (data, X, T, Y, true_ITE, true_ATE, true_ATE_stderr, is_discrete)
 
 def calculate_risks(true_ate, estimated_ate, true_ite_values, estimated_ite_values):
@@ -280,3 +281,93 @@ def select_discrete_estimator(estimator_type):
         return (Pipeline([('poly', poly), ('linear', linear)]))
     else:
         raise ValueError(f"Unsupported estimator type: {estimator_type}")
+
+
+def select_classification_hyperparameters(estimator):
+    """
+    Returns a hyperparameter grid for the specified classification model type.
+    
+    Args:
+        model_type (str): The type of model to be used. Valid values are 'linear', 'forest', 'nnet', and 'poly'.
+    
+    Returns:
+        A dictionary representing the hyperparameter grid to search over.
+    """
+    
+    if isinstance(estimator, LogisticRegressionCV):
+        # Hyperparameter grid for linear classification model
+        return {
+            'Cs': [0.01, 0.1, 1],
+            'penalty': ['l1', 'l2', 'elasticnet'],
+            'solver': ['lbfgs', 'liblinear', 'saga']
+        }
+    elif isinstance(estimator, RandomForestClassifier):
+        # Hyperparameter grid for random forest classification model
+        return {
+            'n_estimators': [100, 500],
+            'max_depth': [None, 5, 10, 20],
+            'min_samples_split': [2, 5],
+            'min_samples_leaf': [1, 2]
+        }
+    elif isinstance(estimator, GradientBoostingClassifier):
+        # Hyperparameter grid for gradient boosting classification model
+        return {
+            'n_estimators': [100, 500],
+            'learning_rate': [0.01, 0.05, 0.1],
+            'max_depth': [3, 5, 7],
+            
+        }
+    elif isinstance(estimator, MLPClassifier):
+        # Hyperparameter grid for neural network classification model
+        return {
+            'hidden_layer_sizes': [(10,), (50,), (100,)],
+            'activation': ['relu'],
+            'solver': ['adam'],
+            'alpha': [0.0001, 0.001, 0.01],
+            'learning_rate': ['constant', 'adaptive']
+        }
+    else:
+        warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for LogisticRegressionCV, RandomForestClassifier, MLPClassifier, and the polynomial pipleine", category=UserWarning)
+        return {}
+        # raise ValueError("Invalid model type. Valid values are 'linear', 'forest', 'nnet', and 'poly'.")
+
+def select_regression_hyperparameters(estimator):
+    """
+    Returns a dictionary of hyperparameters to be searched over for a regression model.
+
+    Args:
+        model_type (str): The type of model to be used. Valid values are 'linear', 'forest', 'nnet', and 'poly'.
+
+    Returns:
+        A dictionary of hyperparameters to be searched over using a grid search.
+    """
+    if isinstance(estimator, ElasticNetCV):
+        return {
+            'l1_ratio': [0.1, 0.5, 0.9],
+            'max_iter': [1000],
+        }
+    elif isinstance(estimator, RandomForestRegressor):
+        return {
+            'n_estimators': [50],
+            'max_depth': [None, 10, 50],
+            'min_samples_split': [2, 5, 10],
+        }
+    elif isinstance(estimator, MLPRegressor):
+        # Hyperparameter grid for neural network classification model
+        return {
+            'hidden_layer_sizes': [(10,), (50,), (100,)],
+            'alpha': [0.0001, 0.001, 0.01],
+            'learning_rate': ['constant', 'adaptive']
+        }
+    elif isinstance(estimator, GradientBoostingRegressor):
+        # Hyperparameter grid for gradient boosting regression model
+        return {
+            'n_estimators': [100],
+            'learning_rate': [0.01, 0.1, 1.0],
+            'max_depth': [3, 5],
+        }
+    else:
+        warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for ElasticNetCV, RandomForestRegressor, MLPRegressor, and the polynomial pipeline.", category=UserWarning)
+        return {}
+        # raise ValueError("Invalid model type. Valid values are 'linear', 'forest', 'nnet', and 'poly'.")
+
