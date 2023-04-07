@@ -1,58 +1,89 @@
 import time
 from utils import *
-
-import time
+import pdb
+from sklearn.preprocessing import StandardScaler
+# from data_preprocessing.ihdp import * 
+# from data_preprocessing.lalonde import *
+# from data_preprocessing.lbidd import *
+# from data_preprocessing.synthetic import *
+# from data_preprocessing.twins import *
 
 k = 2
-ci_estimators = ['sl', 'tl', 'xl', 'dml', 'orf', 'dr', 'sparse_dml', 'kernel_dml', 'CausalForestDML']
+ci_estimators = ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalForestDML']
 
-def causal_inference_analysis(model_y, model_t, str_causal_model,x, w, y, t):
+# ci_estimators = ['dr']
+
+def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_ate, true_ate_std, true_ite, is_meta):
     causal_model = get_estimators(str_causal_model, model_y, model_t)
+    if is_meta:
+        start_time = time.time()
+        causal_model.fit(y, t, X=x)
+        run_time = time.time() - start_time
+    else:
+        start_time = time.time()
+        causal_model.fit(y, t, X=x, W=None)
+        run_time = time.time() - start_time
 
-    start_time = time.time()
-    causal_model.fit(x, t, y, W=w)
-    run_time = time.time() - start_time
+    estimated_ate = causal_model.ate(x)
 
-    ate = causal_model.ate_
-    std_ate = causal_model.ate_stderr_
+    estimated_ite_values = causal_model.effect(x)
+
+    tao_risk, mu_risk = calculate_risks(true_ate, estimated_ate, true_ite, estimated_ite_values)
+
+    return {'causal_model_name': causal_model.__class__.__name__, 'model_t': model_t.__class__.__name__, 'model_y': model_y.__class__.__name__,
+            'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk, 
+            'run_time': run_time}, estimated_ite_values
+
     
-    true_ate = ...
-    true_std_ate = ...
-
-    return {'combo': f"{model_t.__class__.__name__}_{model_y.__class__.__name__}",
-        'ate': ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk, 'run_time': run_time, 
-        'model_t': model_t.__class__.__name__, 'model_y': model_y.__class__.__name__}
-
 
 if __name__ == "__main__":
-    kf = KFold(n_splits=k)
-    my_list = []
-    mt_list = []
-    data_list = []
+    classifiers = [GradientBoostingClassifier(),
+               RandomForestClassifier(),
+               LogisticRegression(),
+               LogisticRegressionCV(),
+               MLPClassifier(),
+               DecisionTreeClassifier()]
+
+    regressors = [GradientBoostingRegressor(),
+                RandomForestRegressor(),
+                LinearRegression(),
+                ElasticNet(),
+                ElasticNetCV(),
+                Lasso(),
+                LassoLars(),
+                Ridge(),
+                MLPRegressor(),
+                DecisionTreeRegressor()]
+
+
+    # data_dict = {'ihdp':load_ihdp()}
+    data_dict = {'twin':load_twin()}
     all_results = []
-    for tuple_data in data_list:
-        data, x, w, y, t = tuple_data
+    for key in data_dict:
+        data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete = data_dict[key]
+        scaler = StandardScaler()
+        x_scaled = scaler.fit_transform(X)
+
+        my_list = regressors
+        mt_list = classifiers if is_discrete else regressors
         for str_causal_model in ci_estimators:
             is_meta = False
             if str_causal_model in ['sl', 'xl', 'tl']:
-                 is_meta = True
+                    is_meta = True
             for model_y  in my_list:
                 count = 0
                 for model_t in mt_list:
-                    # if is_meta:
-                    #     count += 1
-                    #     if count > 1:
-                    #         continue
-                    # # for idx, (train_index, test_index) in enumerate(kf.split(data)):
-                    # #     train_data = data.iloc[train_index]
-                    #     # test_data = data.iloc[test_index]
                     try:
-                        temp_results = causal_inference_analysis(model_y, model_t, str_causal_model, x, w, y, t)
+                        temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, str_causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+                        temp_results['data'] = key
                         all_results.append(temp_results)
+                        results_df = pd.DataFrame(all_results)
+                        results_df.to_csv(f'results/{key}_no_params_baselines.csv')
+                        print(f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                     except Exception as e:
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
-    results_df = pd.DataFrame(all_results)
-    results_df.to_csv('results/no_params_baselines.csv')
+        
+            
 
 
 

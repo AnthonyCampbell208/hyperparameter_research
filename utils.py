@@ -1,25 +1,52 @@
-import os
-import logging
 import argparse
+import logging
+import os
+
 import numpy as np
 import pandas as pd
-import os
-os.chdir('/Users/anthonycampbell/Downloads')
+
+# os.chdir('/Users/anthonycampbell/Downloads')
+
+import warnings
 
 import econml
-from econml.dml import LinearDML, SparseLinearDML, KernelDML, CausalForestDML
-from econml.orf import DMLOrthoForest
+import numpy as np
+import pandas as pd
+import sklearn
+import sklearn.ensemble
+import sklearn.linear_model
+import sklearn.neural_network
+import sklearn.preprocessing
+from econml.dml import CausalForestDML, KernelDML, LinearDML, SparseLinearDML
 from econml.dr import DRLearner
-from econml.metalearners import SLearner, TLearner, XLearner
 from econml.grf import CausalForest
-from sklearn.model_selection import KFold
+from econml.metalearners import SLearner, TLearner, XLearner
+from econml.orf import DMLOrthoForest
+from sklearn.base import BaseEstimator, is_regressor
+from sklearn.ensemble import (GradientBoostingClassifier,
+                              GradientBoostingRegressor,
+                              RandomForestClassifier, RandomForestRegressor)
+from sklearn.linear_model import (ARDRegression, BayesianRidge, ElasticNet,
+                                  ElasticNetCV, Lars, Lasso, LassoLars,
+                                  LinearRegression, LogisticRegression,
+                                  LogisticRegressionCV,
+                                  OrthogonalMatchingPursuit, Ridge)
+from sklearn.model_selection import (BaseCrossValidator, GridSearchCV, KFold,
+                                     RandomizedSearchCV, StratifiedKFold,
+                                     check_cv, train_test_split)
+from sklearn.neural_network import MLPClassifier, MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import (MaxAbsScaler, MinMaxScaler,
+                                   PolynomialFeatures, RobustScaler,
+                                   StandardScaler)
+from sklearn.svm import SVC, LinearSVC
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+
 # from models.data import IHDP, JOBS, TWINS, NEWS
 # from models.estimators import SEvaluator, TEvaluator, XEvaluator, DREvaluator, DMLEvaluator, IPSWEvaluator, CausalForestEvaluator
 # from models.estimators import TSEvaluator, DRSEvaluator, DMLSEvaluator, IPSWSEvaluator
 # from helpers.utils import init_logger, get_model_name
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
 
 def load_401k():
     url = "https://raw.githubusercontent.com/CausalAIBook/MetricsMLNotebooks/main/data/401k.csv"
@@ -47,20 +74,134 @@ def load_abalone():
 
 
 def load_ihdp():
-    url = "https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/IHDP/csv/ihdp_npci_1.csv"
-    ihdp_df = pd.read_csv(url)
-    col =  ["treatment", "y_factual", "y_cfactual", "mu0", "mu1","x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11", "x12", "x13", "x14", "x15", "x16", "x17", "x18", "x19", "x20", "x21", "x22", "x23", "x24", "x25"]
-    ihdp_df.columns = col
-    ihdp_df = ihdp_df.astype({"treatment":'bool'}, copy=False)
-    T = ihdp_df['treatment']
-    feature_cols = ["mu0", "mu1", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10", "x11", "x12", "x13", "x14", "x15", "x16", "x17", "x18", "x19", "x20", "x21", "x22", "x23", "x24", "x25"]
-    X = ihdp_df[feature_cols]
+    data= pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/IHDP/csv/ihdp_npci_1.csv", header = None)
+    col =  ["treatment", "y_factual", "y_cfactual", "mu0", "mu1" ,]
+    for i in range(1,26):
+        col.append("x"+str(i))
+    data.columns = col
+    data = data.astype({"treatment":'bool'}, copy=False)
+    data.head()
 
-    #Column y_factual gives the observed Bayley Mental Development Index score
-    Y = ihdp_df['y_factual']
+    treatment='treatment'
+    outcome='y_factual'
 
-    return ihdp_df, X, T, Y
+    common_causes=["x"+str(i) for  i in range(1,26)]
 
+    X = data[common_causes]
+    Y = data[outcome]
+    T = data[treatment].astype(int)
+
+    true_ite = data['mu1'] - data['mu0']
+    true_ATE = np.mean(true_ite)
+    true_ATE_stderr = np.std(true_ite)
+
+    is_discrete = True
+
+    return data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete
+
+def load_twin():
+    #The covariates data has 46 features
+    x = pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_X_3years_samesex.csv")
+
+    #The outcome data contains mortality of the lighter and heavier twin
+    y = pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_Y_3years_samesex.csv")
+
+    #The treatment data contains weight in grams of both the twins
+    t = pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/TWINS/twin_pairs_T_3years_samesex.csv")
+
+    lighter_columns = ['pldel', 'birattnd', 'brstate', 'stoccfipb', 'mager8',
+        'ormoth', 'mrace', 'meduc6', 'dmar', 'mplbir', 'mpre5', 'adequacy',
+        'orfath', 'frace', 'birmon', 'gestat10', 'csex', 'anemia', 'cardiac',
+        'lung', 'diabetes', 'herpes', 'hydra', 'hemo', 'chyper', 'phyper',
+        'eclamp', 'incervix', 'pre4000', 'preterm', 'renal', 'rh', 'uterine',
+        'othermr', 'tobacco', 'alcohol', 'cigar6', 'drink5', 'crace',
+        'data_year', 'nprevistq', 'dfageq', 'feduc6', 'infant_id_0',
+        'dlivord_min', 'dtotord_min', 'bord_0',
+        'brstate_reg', 'stoccfipb_reg', 'mplbir_reg']
+    heavier_columns = [ 'pldel', 'birattnd', 'brstate', 'stoccfipb', 'mager8',
+        'ormoth', 'mrace', 'meduc6', 'dmar', 'mplbir', 'mpre5', 'adequacy',
+        'orfath', 'frace', 'birmon', 'gestat10', 'csex', 'anemia', 'cardiac',
+        'lung', 'diabetes', 'herpes', 'hydra', 'hemo', 'chyper', 'phyper',
+        'eclamp', 'incervix', 'pre4000', 'preterm', 'renal', 'rh', 'uterine',
+        'othermr', 'tobacco', 'alcohol', 'cigar6', 'drink5', 'crace',
+        'data_year', 'nprevistq', 'dfageq', 'feduc6',
+        'infant_id_1', 'dlivord_min', 'dtotord_min', 'bord_1',
+        'brstate_reg', 'stoccfipb_reg', 'mplbir_reg']
+
+    #Since data has pair property,processing the data to get separate row for each twin so that each child can be treated as an instance
+    data = []
+
+    for i in range(len(t.values)):
+        
+        #select only if both <=2kg
+        if t.iloc[i].values[1]>=2000 or t.iloc[i].values[2]>=2000:
+            continue
+        
+        this_instance_lighter = list(x.iloc[i][lighter_columns].values)
+        this_instance_heavier = list(x.iloc[i][heavier_columns].values)
+        
+        #adding weight
+        this_instance_lighter.append(t.iloc[i].values[1])
+        this_instance_heavier.append(t.iloc[i].values[2])
+        
+        #adding treatment, is_heavier
+        this_instance_lighter.append(0)
+        this_instance_heavier.append(1)
+        
+        #adding the outcome
+        this_instance_lighter.append(y.iloc[i].values[1])
+        this_instance_heavier.append(y.iloc[i].values[2])
+        data.append(this_instance_lighter)
+        data.append(this_instance_heavier)
+    cols = [ 'pldel', 'birattnd', 'brstate', 'stoccfipb', 'mager8',
+        'ormoth', 'mrace', 'meduc6', 'dmar', 'mplbir', 'mpre5', 'adequacy',
+        'orfath', 'frace', 'birmon', 'gestat10', 'csex', 'anemia', 'cardiac',
+        'lung', 'diabetes', 'herpes', 'hydra', 'hemo', 'chyper', 'phyper',
+        'eclamp', 'incervix', 'pre4000', 'preterm', 'renal', 'rh', 'uterine',
+        'othermr', 'tobacco', 'alcohol', 'cigar6', 'drink5', 'crace',
+        'data_year', 'nprevistq', 'dfageq', 'feduc6',
+        'infant_id', 'dlivord_min', 'dtotord_min', 'bord',
+        'brstate_reg', 'stoccfipb_reg', 'mplbir_reg','wt','treatment','outcome']
+    df = pd.DataFrame(columns=cols,data=data)
+    df = df.astype({"treatment":'bool'}, copy=False) #explicitly assigning treatment column as boolean 
+
+    df.fillna(value=df.mean(),inplace=True)    #filling the missing values
+    df.fillna(value=df.mode().loc[0],inplace=True)
+
+    data_1 = df[df["treatment"]==1]
+    data_0 = df[df["treatment"]==0]
+
+    true_ITE = data_1["outcome"] - data_0["outcome"]
+    true_ATE =  np.mean(true_ITE)
+    true_ATE_stderr = np.std(true_ITE)
+
+    T = df['treatment'].astype(int)
+    Y = df['outcome']
+    X
+    return (data, X, T, Y, true_ITE, true_ATE, true_ATE_stderr, is_discrete)
+
+def calculate_risks(true_ate, estimated_ate, true_ite_values, estimated_ite_values):
+    """
+    Calculates the tau risk and mu risk for given true and estimated ATE and ITE values.
+    
+    Args:
+    true_ate (float): True ATE value.
+    estimated_ate (float): Estimated ATE value.
+    true_ite_values (numpy array): Array of true ITE values.
+    estimated_ite_values (numpy array): Array of estimated ITE values.
+
+    Returns:
+    tau_risk (float): Calculated tau risk.
+    mu_risk (float): Calculated mu risk.
+    """
+
+    # Compute tau risk
+    tau_risk = (true_ate - estimated_ate) ** 2
+
+    # Compute mu risk
+    mu_risk = np.mean((true_ite_values - estimated_ite_values) ** 2)
+
+    return tau_risk, mu_risk
 
 def get_estimators(estimation_model, model_y, model_t):
     if estimation_model == 'sl':
@@ -83,3 +224,59 @@ def get_estimators(estimation_model, model_y, model_t):
         return CausalForestDML(model_y=model_y, model_t=model_t)
     else:
         raise ValueError("Unrecognized 'estimation_model' key.")
+    
+def select_continuous_estimator(estimator_type):
+    """
+    Returns a continuous estimator object for the specified estimator type.
+
+    Args:
+        estimator_type (str): The type of estimator to use, one of: 'linear', 'forest', 'gbf', 'nnet', 'poly'.
+
+    Returns:
+        object: An instance of the selected estimator class.
+
+    Raises:
+        ValueError: If the estimator type is unsupported.
+    """
+    if estimator_type == 'linear':
+        return (ElasticNetCV())
+    elif estimator_type == 'forest':
+        return RandomForestRegressor()
+    elif estimator_type == 'gbf':
+        return GradientBoostingRegressor()
+    elif estimator_type == 'nnet':
+        return (MLPRegressor())
+    elif estimator_type == 'poly':
+        poly = sklearn.preprocessing.PolynomialFeatures()
+        linear = sklearn.linear_model.ElasticNetCV(cv=3) #Play around with precompute and tolerance
+        return (Pipeline([('poly', poly), ('linear', linear)]))
+    else:
+        raise ValueError(f"Unsupported estimator type: {estimator_type}")
+
+def select_discrete_estimator(estimator_type):
+    """
+    Returns a discrete estimator object for the specified estimator type.
+
+    Args:
+        estimator_type (str): The type of estimator to use, one of: 'linear', 'forest', 'gbf', 'nnet', 'poly'.
+
+    Returns:
+        object: An instance of the selected estimator class.
+
+    Raises:
+        ValueError: If the estimator type is unsupported.
+    """
+    if estimator_type == 'linear':
+        return (LogisticRegressionCV(multi_class='auto'))
+    elif estimator_type == 'forest':
+        return RandomForestClassifier()
+    elif estimator_type == 'gbf':
+        return GradientBoostingClassifier()
+    elif estimator_type == 'nnet':
+        return (MLPClassifier())
+    elif estimator_type == 'poly':
+        poly = PolynomialFeatures()
+        linear = LogisticRegressionCV(multi_class='auto')
+        return (Pipeline([('poly', poly), ('linear', linear)]))
+    else:
+        raise ValueError(f"Unsupported estimator type: {estimator_type}")
