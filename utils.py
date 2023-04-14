@@ -9,6 +9,9 @@ import pandas as pd
 
 import warnings
 
+import sys
+sys.path.insert(0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
+
 import econml
 import numpy as np
 import pandas as pd
@@ -168,8 +171,8 @@ def load_twin():
     df.fillna(value=df.mean(),inplace=True)    #filling the missing values
     df.fillna(value=df.mode().loc[0],inplace=True)
 
-    data_1 = df[df["treatment"]==1]
-    data_0 = df[df["treatment"]==0]
+    data_1 = df[df["treatment"]==1].reset_index()
+    data_0 = df[df["treatment"]==0].reset_index()
 
     true_ITE = data_1["outcome"] - data_0["outcome"]
     true_ATE =  np.mean(true_ITE)
@@ -177,7 +180,7 @@ def load_twin():
 
     T = df['treatment'].astype(int)
     Y = df['outcome']
-    X = df[]
+    X = df.drop(['treatment', 'outcome'], axis=1)
     is_discrete = True
     return (data, X, T, Y, true_ITE, true_ATE, true_ATE_stderr, is_discrete)
 
@@ -200,7 +203,10 @@ def calculate_risks(true_ate, estimated_ate, true_ite_values, estimated_ite_valu
     tau_risk = (true_ate - estimated_ate) ** 2
 
     # Compute mu risk
-    mu_risk = np.mean((true_ite_values - estimated_ite_values) ** 2)
+    if len(true_ite_values) != len(estimated_ite_values):
+        mu_risk = None
+    else:
+        mu_risk = np.mean((true_ite_values - estimated_ite_values) ** 2)
 
     return tau_risk, mu_risk
 
@@ -212,7 +218,7 @@ def get_estimators(estimation_model, model_y, model_t):
     elif estimation_model == 'xl':
         return XLearner(models= model_y)
     elif estimation_model == 'dml':
-        return LinearDML(model_y=model_y, model_t=model_t)
+        return LinearDML(model_y=model_y, model_t=model_t )
     elif estimation_model == 'orf':
         return DMLOrthoForest(model_y=model_y, model_t=model_t)
     elif estimation_model == 'dr':

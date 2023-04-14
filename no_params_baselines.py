@@ -1,12 +1,15 @@
 import time
 from utils import *
 import pdb
+import os
 from sklearn.preprocessing import StandardScaler
 # from data_preprocessing.ihdp import * 
 # from data_preprocessing.lalonde import *
 # from data_preprocessing.lbidd import *
 # from data_preprocessing.synthetic import *
 # from data_preprocessing.twins import *
+import sys
+sys.path.insert(0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 k = 2
 ci_estimators = ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalForestDML']
@@ -30,7 +33,12 @@ def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_a
 
     tao_risk, mu_risk = calculate_risks(true_ate, estimated_ate, true_ite, estimated_ite_values)
 
-    return {'causal_model_name': causal_model.__class__.__name__, 'model_t': model_t.__class__.__name__, 'model_y': model_y.__class__.__name__,
+    if is_meta:
+        return {'causal_model_name': causal_model.__class__.__name__, 'model_t': None, 'model_y': model_y.__class__.__name__,
+            'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk, 
+            'run_time': run_time}, estimated_ite_values
+    else:
+        return {'causal_model_name': causal_model.__class__.__name__, 'model_t': model_t.__class__.__name__, 'model_y': model_y.__class__.__name__,
             'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk, 
             'run_time': run_time}, estimated_ite_values
 
@@ -42,7 +50,8 @@ if __name__ == "__main__":
                LogisticRegression(),
                LogisticRegressionCV(),
                MLPClassifier(),
-               DecisionTreeClassifier()]
+               DecisionTreeClassifier(),
+               'auto']
 
     regressors = [GradientBoostingRegressor(),
                 RandomForestRegressor(),
@@ -53,7 +62,8 @@ if __name__ == "__main__":
                 LassoLars(),
                 Ridge(),
                 MLPRegressor(),
-                DecisionTreeRegressor()]
+                DecisionTreeRegressor(),
+                'auto']
 
 
     # data_dict = {'ihdp':load_ihdp()}
@@ -73,10 +83,13 @@ if __name__ == "__main__":
             for model_y  in my_list:
                 count = 0
                 for model_t in mt_list:
+                    if is_meta and count >= 1:
+                        continue
                     try:
                         temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, str_causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
                         temp_results['data'] = key
                         all_results.append(temp_results)
+
                         results_df = pd.DataFrame(all_results)
                         results_df.to_csv(f'results/{key}_no_params_baselines.csv')
                         print(f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
