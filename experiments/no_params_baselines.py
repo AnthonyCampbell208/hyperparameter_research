@@ -9,7 +9,8 @@ from sklearn.preprocessing import StandardScaler
 # from data_preprocessing.synthetic import *
 # from data_preprocessing.twins import *
 import sys
-sys.path.insert(0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
+import wandb
+# sys.path.insert(0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 k = 2
 ci_estimators = ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalForestDML']
@@ -45,6 +46,7 @@ def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_a
     
 
 if __name__ == "__main__":
+    
     classifiers = [GradientBoostingClassifier(),
                RandomForestClassifier(),
                LogisticRegression(),
@@ -65,6 +67,12 @@ if __name__ == "__main__":
                 DecisionTreeRegressor(),
                 'auto']
 
+    wandb.init(project="cs696ds-econml", config={
+        "causal_estimators": ci_estimators,
+        "classifiers": classifiers,
+        "regressors": regressors,
+    })
+    config = wandb.config
 
     # data_dict = {'ihdp':load_ihdp()}
     data_dict = {'twin':load_twin()}
@@ -96,7 +104,7 @@ if __name__ == "__main__":
                     except Exception as e:
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
         
-            
+    wandb.finish()
 
 
 
