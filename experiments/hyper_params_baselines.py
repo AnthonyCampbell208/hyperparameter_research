@@ -1,6 +1,7 @@
 import time
 from utils import *
 import pdb
+import sklearn
 from sklearn.preprocessing import StandardScaler
 # from data_preprocessing.ihdp import * 
 # from data_preprocessing.lalonde import *
@@ -14,6 +15,7 @@ ci_estimators = ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalFor
 # ci_estimators = ['dr']
 
 def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_ate, true_ate_std, true_ite, is_meta):
+    # set hyperparameters
     causal_model = get_estimators(str_causal_model, model_y, model_t)
     if is_meta:
         start_time = time.time()
@@ -67,6 +69,21 @@ if __name__ == "__main__":
             for model_y  in my_list:
                 count = 0
                 for model_t in mt_list:
+                    """
+                    Set hyperparameters for model_y and model_t 
+
+                    model_y is regressor so get reg hyperparams
+
+                    model_t could be either (contingent on is_dsicrete)
+
+                    Method "set_params" simply sets the parameters for the model (native sk_learn)
+                    
+                    """
+                    model_y.set_params(**select_regression_hyperparameters(model_y))
+                    model_t.set_params(**select_regression_hyperparameters(model_y))
+                    if is_discrete:
+                        model_t.set_params(**select_classification_hyperparameters(model_t))
+                        
                     try:
                         temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, str_causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
                         temp_results['data'] = key
