@@ -75,7 +75,6 @@ def load_abalone():
 
     return data_df, X, T, Y
 
-
 def load_ihdp():
     data= pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/IHDP/csv/ihdp_npci_1.csv", header = None)
     col =  ["treatment", "y_factual", "y_cfactual", "mu0", "mu1" ,]
