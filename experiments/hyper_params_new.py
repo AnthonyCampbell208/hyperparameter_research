@@ -161,7 +161,7 @@ if __name__ == "__main__":
                                     top_10_scores = results_df.groupby('causal_model_name').apply(lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
                                     top_10_scores_table = wandb.Table(dataframe=top_10_scores)
                                     wandb.log({"top_10_scores_table": top_10_scores_table})
-                                    results_df.to_csv(f'results/{key}_no_params_baselines.csv')
+                                    results_df.to_csv(f'results/{key}_hyper_params_baselines.csv')
                                 print(f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                                 param_count += 1
                     except Exception as e:
