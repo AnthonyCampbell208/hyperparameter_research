@@ -99,11 +99,16 @@ if __name__ == "__main__":
                         all_results.append(temp_results)
 
                         results_df = pd.DataFrame(all_results)
+
+                        top_10_scores = results_df.groupby('causal_model_name').apply(lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
+                        top_10_scores_table = wandb.Table(dataframe=top_10_scores)
+                        wandb.log({"top_10_scores_table": top_10_scores_table})
+
                         results_df.to_csv(f'results/{key}_no_params_baselines.csv')
                         print(f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                     except Exception as e:
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
-        
+    wandb.alert(title="Code is done!", )
     wandb.finish()
 
 
