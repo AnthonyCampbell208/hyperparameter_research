@@ -77,12 +77,13 @@ if __name__ == "__main__":
                     model_t could be either (contingent on is_dsicrete)
 
                     Method "set_params" simply sets the parameters for the model (native sk_learn)
-                    
+
                     """
                     model_y.set_params(**select_regression_hyperparameters(model_y))
-                    model_t.set_params(**select_regression_hyperparameters(model_y))
                     if is_discrete:
                         model_t.set_params(**select_classification_hyperparameters(model_t))
+                    else:
+                        model_t.set_params(**select_regression_hyperparameters(model_t))
                         
                     try:
                         temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, str_causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
