@@ -1,0 +1,25 @@
+
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-GradientBoostingClassifier() estimator with sl method: cannot concatenate object of type '<class 'dict'>'; only Series and DataFrame objs are valid
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-RandomForestClassifier() estimator with sl method: cannot concatenate object of type '<class 'dict'>'; only Series and DataFrame objs are valid
+Traceback (most recent call last):
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 127, in <module>
+    temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 24, in causal_inference_analysis
+    causal_model.fit(y, t, X=x)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_cate_estimator.py", line 130, in call
+    m(self, Y, T, *args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/metalearners/_metalearners.py", line 170, in fit
+    self.overall_model.fit(feat_arr, Y)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 668, in fit
+    n_stages = self._fit_stages(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 745, in _fit_stages
+    raw_predictions = self._fit_stage(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 247, in _fit_stage
+    tree.fit(X, residual, sample_weight=sample_weight, check_input=False)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 1342, in fit
+    super().fit(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 458, in fit
+    builder.build(self.tree_, X, y, sample_weight)
+KeyboardInterrupt

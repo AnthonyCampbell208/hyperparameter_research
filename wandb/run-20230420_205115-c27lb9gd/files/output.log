@@ -1,0 +1,52 @@
+
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+> /Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py(132)<module>()
+-> if already_loaded_file:
+True
+False
+GradientBoostingRegressor()
+GradientBoostingClassifier()
+*** NameError: name 'causal_model_name' is not defined
+*** SyntaxError: unexpected EOF while parsing
+   Unnamed: 0 causal_model_name model_t                    model_y   est_ate  true_ate  mu_risk  tao_risk  run_time  data
+0           0          SLearner     NaN  GradientBoostingRegressor  0.020458   -0.0252      NaN  0.002085  4.769576  twin
+1           1          SLearner     NaN  GradientBoostingRegressor  0.020458   -0.0252      NaN  0.002085  4.773076  twin
+2           2          SLearner     NaN  GradientBoostingRegressor  0.020458   -0.0252      NaN  0.002085  4.766188  twin
+3           3          SLearner     NaN  GradientBoostingRegressor  0.020458   -0.0252      NaN  0.002085  4.763343  twin
+4           4          SLearner     NaN  GradientBoostingRegressor  0.020458   -0.0252      NaN  0.002085  4.774444  twin
+<econml.metalearners._metalearners.SLearner object at 0x16b9eeb20>
+0       True
+1       True
+2       True
+3       True
+4       True
+       ...
+215     True
+216     True
+217    False
+218    False
+219    False
+Name: model_y, Length: 220, dtype: bool
+*** SyntaxError: invalid syntax
+*** SyntaxError: unmatched ']'
+Error occurred while running GradientBoostingRegressor()-GradientBoostingClassifier() estimator with sl method:
+Traceback (most recent call last):
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 127, in <module>
+    & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 24, in causal_inference_analysis
+    causal_model.fit(y, t, X=x)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_cate_estimator.py", line 130, in call
+    m(self, Y, T, *args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/metalearners/_metalearners.py", line 170, in fit
+    self.overall_model.fit(feat_arr, Y)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 668, in fit
+    n_stages = self._fit_stages(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 745, in _fit_stages
+    raw_predictions = self._fit_stage(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_gb.py", line 247, in _fit_stage
+    tree.fit(X, residual, sample_weight=sample_weight, check_input=False)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 1342, in fit
+    super().fit(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 458, in fit
+    builder.build(self.tree_, X, y, sample_weight)
+KeyboardInterrupt

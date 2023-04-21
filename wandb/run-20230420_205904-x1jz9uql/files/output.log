@@ -1,0 +1,275 @@
+Skipping model_y: GradientBoostingRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: GradientBoostingRegressor(), model_t: auto, str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: RandomForestRegressor(), model_t: auto, str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: LinearRegression(), model_t: auto, str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNet(), model_t: auto, str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: ElasticNetCV(), model_t: auto, str_causal_model: sl
+Skipping model_y: Lasso(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: Lasso(), model_t: auto, str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: LassoLars(), model_t: auto, str_causal_model: sl
+Skipping model_y: Ridge(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: Ridge(), model_t: auto, str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: MLPRegressor(), model_t: auto, str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: RandomForestClassifier(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegression(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegressionCV(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: MLPClassifier(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: sl
+Skipping model_y: DecisionTreeRegressor(), model_t: auto, str_causal_model: sl
+Error occurred while running auto-GradientBoostingClassifier() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-RandomForestClassifier() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-LogisticRegression() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-LogisticRegressionCV() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-MLPClassifier() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-DecisionTreeClassifier() estimator with sl method: 'str' object has no attribute 'fit'
+Error occurred while running auto-auto estimator with sl method: 'str' object has no attribute 'fit'
+Skipping model_y: GradientBoostingRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: GradientBoostingRegressor(), model_t: auto, str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: RandomForestRegressor(), model_t: auto, str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: LinearRegression(), model_t: auto, str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNet(), model_t: auto, str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: ElasticNetCV(), model_t: auto, str_causal_model: tl
+Skipping model_y: Lasso(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: Lasso(), model_t: auto, str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: LassoLars(), model_t: auto, str_causal_model: tl
+Skipping model_y: Ridge(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: Ridge(), model_t: auto, str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: MLPRegressor(), model_t: auto, str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: RandomForestClassifier(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegression(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegressionCV(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: MLPClassifier(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: tl
+Skipping model_y: DecisionTreeRegressor(), model_t: auto, str_causal_model: tl
+Error occurred while running auto-GradientBoostingClassifier() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-RandomForestClassifier() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-LogisticRegression() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-LogisticRegressionCV() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-MLPClassifier() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-DecisionTreeClassifier() estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-auto estimator with tl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Skipping model_y: GradientBoostingRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: GradientBoostingRegressor(), model_t: auto, str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: RandomForestRegressor(), model_t: auto, str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: LinearRegression(), model_t: auto, str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNet(), model_t: auto, str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: ElasticNetCV(), model_t: auto, str_causal_model: xl
+Skipping model_y: Lasso(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: Lasso(), model_t: auto, str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: LassoLars(), model_t: auto, str_causal_model: xl
+Skipping model_y: Ridge(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: Ridge(), model_t: auto, str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: MLPRegressor(), model_t: auto, str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: RandomForestClassifier(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegression(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: LogisticRegressionCV(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: MLPClassifier(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: xl
+Skipping model_y: DecisionTreeRegressor(), model_t: auto, str_causal_model: xl
+Error occurred while running auto-GradientBoostingClassifier() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-RandomForestClassifier() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-LogisticRegression() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-LogisticRegressionCV() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-MLPClassifier() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-DecisionTreeClassifier() estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Error occurred while running auto-auto estimator with xl method: models must be either a tuple/list of estimators with same number of treatments or an unified estimator.
+Skipping model_y: GradientBoostingRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: RandomForestClassifier(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegression(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: LogisticRegressionCV(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: MLPClassifier(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: dml
+Skipping model_y: GradientBoostingRegressor(), model_t: auto, str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: GradientBoostingClassifier(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: RandomForestClassifier(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegression(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: LogisticRegressionCV(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: MLPClassifier(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: DecisionTreeClassifier(), str_causal_model: dml
+Skipping model_y: RandomForestRegressor(), model_t: auto, str_causal_model: dml
+Traceback (most recent call last):
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 132, in <module>
+    temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 28, in causal_inference_analysis
+    causal_model.fit(y, t, X=x, W=None)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/dml/dml.py", line 655, in fit
+    return super().fit(Y, T, X=X, W=W,
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/dml/dml.py", line 503, in fit
+    return super().fit(Y, T, X=X, W=W, sample_weight=sample_weight, freq_weight=freq_weight,
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/dml/_rlearner.py", line 368, in fit
+    return super().fit(Y, T, X=X, W=W,
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_cate_estimator.py", line 130, in call
+    m(self, Y, T, *args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_ortho_learner.py", line 636, in fit
+    nuisances, fitted_models, new_inds, scores = self._fit_nuisances(
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_ortho_learner.py", line 766, in _fit_nuisances
+    nuisances, fitted_models, fitted_inds, scores = _crossfit(self._ortho_learner_model_nuisance, folds,
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_ortho_learner.py", line 168, in _crossfit
+    model_list[idx].fit(*args_train, **kwargs_train)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/dml/_rlearner.py", line 52, in fit
+    self._model_y.fit(X, W, Y, **filter_none_kwargs(sample_weight=sample_weight, groups=groups))
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/dml/dml.py", line 75, in fit
+    fit_with_groups(self._model, self._combine(X, W, Target.shape[0]), Target, groups=groups)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/utilities.py", line 906, in fit_with_groups
+    return model.fit(X, y, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/linear_model/_base.py", line 736, in fit
+    self.coef_, _, self.rank_, self.singular_ = linalg.lstsq(X, y)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/scipy/linalg/_basic.py", line 1192, in lstsq
+    x, s, rank, info = lapack_func(a1, b1, lwork,
+KeyboardInterrupt

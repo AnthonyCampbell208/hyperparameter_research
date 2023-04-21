@@ -1,0 +1,51 @@
+
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-GradientBoostingClassifier() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-RandomForestClassifier() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-LogisticRegression() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-LogisticRegressionCV() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-MLPClassifier() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-DecisionTreeClassifier() estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running GradientBoostingRegressor()-auto estimator with sl method: If using all scalar values, you must pass an index
+Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+Error occurred while running RandomForestRegressor()-GradientBoostingClassifier() estimator with sl method: If using all scalar values, you must pass an index
+Traceback (most recent call last):
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 127, in <module>
+    temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 24, in causal_inference_analysis
+    causal_model.fit(y, t, X=x)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/_cate_estimator.py", line 130, in call
+    m(self, Y, T, *args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/econml/metalearners/_metalearners.py", line 170, in fit
+    self.overall_model.fit(feat_arr, Y)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py", line 476, in fit
+    trees = Parallel(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/parallel.py", line 1088, in __call__
+    while self.dispatch_one_batch(iterator):
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/parallel.py", line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/parallel.py", line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 208, in apply_async
+    result = ImmediateResult(func)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/_parallel_backends.py", line 597, in __init__
+    self.results = batch()
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/parallel.py", line 288, in __call__
+    return [func(*args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/joblib/parallel.py", line 288, in <listcomp>
+    return [func(*args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/utils/fixes.py", line 117, in __call__
+    return self.function(*args, **kwargs)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py", line 189, in _parallel_build_trees
+    tree.fit(X, y, sample_weight=curr_sample_weight, check_input=False)
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 1342, in fit
+    super().fit(
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/sklearn/tree/_classes.py", line 458, in fit
+    builder.build(self.tree_, X, y, sample_weight)
+KeyboardInterrupt

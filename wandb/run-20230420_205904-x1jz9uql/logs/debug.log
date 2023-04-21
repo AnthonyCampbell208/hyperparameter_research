@@ -1,0 +1,26 @@
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Configure stats pid to 96355
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Loading settings from /Users/anthonycampbell/.config/wandb/settings
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Loading settings from /Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/wandb/settings
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'experiments/no_params_baselines.py', 'program': '/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py'}
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_init.py:_log_setup():507] Logging user logs to /Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/wandb/run-20230420_205904-x1jz9uql/logs/debug.log
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/wandb/run-20230420_205904-x1jz9uql/logs/debug-internal.log
+2023-04-20 20:59:04,350 INFO    MainThread:96355 [wandb_init.py:init():547] calling init triggers
+2023-04-20 20:59:04,354 INFO    MainThread:96355 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'causal_estimators': ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalForestDML'], 'classifiers': [GradientBoostingClassifier(), RandomForestClassifier(), LogisticRegression(), LogisticRegressionCV(), MLPClassifier(), DecisionTreeClassifier(), 'auto'], 'regressors': [GradientBoostingRegressor(), RandomForestRegressor(), LinearRegression(), ElasticNet(), ElasticNetCV(), Lasso(), LassoLars(), Ridge(), MLPRegressor(), DecisionTreeRegressor(), 'auto']}
+2023-04-20 20:59:04,354 INFO    MainThread:96355 [wandb_init.py:init():595] starting backend
+2023-04-20 20:59:04,354 INFO    MainThread:96355 [wandb_init.py:init():599] setting up manager
+2023-04-20 20:59:04,356 INFO    MainThread:96355 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-04-20 20:59:04,358 INFO    MainThread:96355 [wandb_init.py:init():605] backend started and connected
+2023-04-20 20:59:04,366 INFO    MainThread:96355 [wandb_init.py:init():695] updated telemetry
+2023-04-20 20:59:04,408 INFO    MainThread:96355 [wandb_init.py:init():732] communicating run to backend with 60.0 second timeout
+2023-04-20 20:59:04,813 INFO    MainThread:96355 [wandb_run.py:_on_init():2176] communicating current version
+2023-04-20 20:59:05,017 INFO    MainThread:96355 [wandb_run.py:_on_init():2185] got version response 
+2023-04-20 20:59:05,017 INFO    MainThread:96355 [wandb_init.py:init():782] starting run threads in backend
+2023-04-20 20:59:21,621 INFO    MainThread:96355 [wandb_run.py:_console_start():2157] atexit reg
+2023-04-20 20:59:21,622 INFO    MainThread:96355 [wandb_run.py:_redirect():2012] redirect: SettingsConsole.WRAP_RAW
+2023-04-20 20:59:21,624 INFO    MainThread:96355 [wandb_run.py:_redirect():2077] Wrapping output streams.
+2023-04-20 20:59:21,624 INFO    MainThread:96355 [wandb_run.py:_redirect():2102] Redirects installed.
+2023-04-20 20:59:21,626 INFO    MainThread:96355 [wandb_init.py:init():824] run started, returning control to user process
+2023-04-20 21:02:05,846 WARNING MsgRouterThr:96355 [router.py:message_loop():77] message_loop has been closed

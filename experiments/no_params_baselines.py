@@ -95,8 +95,9 @@ if __name__ == "__main__":
         results_file = f'results/{key}_no_params_baselines.csv'
         already_loaded_file = False
         if os.path.exists(results_file):
-            results_df = pd.read_csv(results_file)
+            results_df = pd.read_csv(results_file, index_col=0)
             already_loaded_file = True
+            all_results = results_df.to_dict('records')
         else:
             all_results = []
         my_list = regressors
@@ -130,13 +131,13 @@ if __name__ == "__main__":
                             continue
                         temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
                         temp_results['data'] = key
-
-                        if already_loaded_file:
-                            results_df = results_df.append(temp_results, ignore_index=True)
-                        else:
-                            all_results.append(temp_results)
-                            results_df = pd.DataFrame(all_results)
-
+                        all_results.append(temp_results)
+                        results_df = pd.DataFrame(all_results)
+                        
+                        if i % 10 == 0:
+                            most_recent = results_df.tail(10)
+                            recent_10_table = wandb.Table(dataframe=most_recent)
+                            wandb.log({"most_recent_10_scores_table": recent_10_table})
                         if i % 50 == 0:
                             top_10_scores = results_df.groupby('causal_model_name').apply(lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
                             top_10_scores_table = wandb.Table(dataframe=top_10_scores)

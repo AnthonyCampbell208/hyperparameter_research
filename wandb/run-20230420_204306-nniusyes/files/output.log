@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/anthonycampbell/Documents/CS 696DS/hyperparameter_tuning/experiments/no_params_baselines.py", line 99, in <module>
+    all_results = results_df.to_list()
+  File "/Users/anthonycampbell/miniforge3/lib/python3.9/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'to_list'
