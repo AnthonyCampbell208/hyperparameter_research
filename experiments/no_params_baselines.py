@@ -94,7 +94,7 @@ if __name__ == "__main__":
         x_scaled = scaler.fit_transform(X)
         results_file = f'results/{key}_no_params_baselines.csv'
         already_loaded_file = False
-        if not os.path.exists(results_file):
+        if os.path.exists(results_file):
             results_df = pd.read_csv(results_file)
             all_results = results_df.to_list()
             already_loaded_file = True
@@ -114,11 +114,13 @@ if __name__ == "__main__":
                         continue
                     try:
                         causal_model = get_estimators(str_causal_model, model_y, model_t)
-                        exists = results_df[
-                            (results_df["model_y"] == model_y.__class__.__name__)
-                            & (results_df["model_t"] == model_t.__class__.__name__)
-                            & (results_df["causal_model_name"] == causal_model.__class__.__name__)
-                        ].any().any()
+                        exists = False
+                        if os.path.exists(results_file):
+                            exists = results_df[
+                                (results_df["model_y"] == model_y.__class__.__name__)
+                                & (results_df["model_t"] == model_t.__class__.__name__)
+                                & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                            ].any().any()
                         if exists:
                             print(f"Skipping model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                             continue
