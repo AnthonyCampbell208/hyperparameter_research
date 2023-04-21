@@ -96,7 +96,6 @@ if __name__ == "__main__":
         already_loaded_file = False
         if os.path.exists(results_file):
             results_df = pd.read_csv(results_file)
-            all_results = results_df.to_list()
             already_loaded_file = True
         else:
             all_results = []
@@ -121,16 +120,21 @@ if __name__ == "__main__":
                                 & (results_df["model_t"] == model_t.__class__.__name__)
                                 & (results_df["causal_model_name"] == causal_model.__class__.__name__)
                             ].any().any()
+                            if not exists: 
+                                exists = results_df[
+                                (results_df["model_y"] == model_y.__class__.__name__)
+                                & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                            ].any().any()
                         if exists:
                             print(f"Skipping model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                             continue
                         temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
                         temp_results['data'] = key
-                        all_results.append(temp_results)
 
                         if already_loaded_file:
-                            results_df = pd.concat(all_results, axis=0)
+                            results_df = results_df.append(temp_results, ignore_index=True)
                         else:
+                            all_results.append(temp_results)
                             results_df = pd.DataFrame(all_results)
 
                         if i % 50 == 0:
