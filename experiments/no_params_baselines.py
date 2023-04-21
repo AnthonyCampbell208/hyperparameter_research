@@ -148,6 +148,7 @@ if __name__ == "__main__":
                     except Exception as e:
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
                     i += 1
+                    count += 1
         results_df.to_csv(f'results/{key}_no_params_baselines.csv')
     wandb.alert(title="Code is done!", )
     wandb.finish()

@@ -376,3 +376,10 @@ def select_regression_hyperparameters(estimator):
         return {}
         # raise ValueError("Invalid model type. Valid values are 'linear', 'forest', 'nnet', and 'poly'.")
 
+from typing import Iterable, Any
+from itertools import product
+
+# return all combos
+def grid_parameters(parameters: dict[str, Iterable[Any]]) -> Iterable[dict[str, Any]]:
+    for params in product(*parameters.values()):
+        yield dict(zip(parameters.keys(), params))
