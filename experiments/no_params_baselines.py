@@ -17,8 +17,8 @@ ci_estimators = ['sl', 'tl', 'xl', 'dml', 'sparse_dml', 'kernel_dml', 'CausalFor
 
 # ci_estimators = ['dr']
 
-def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_ate, true_ate_std, true_ite, is_meta):
-    causal_model = get_estimators(str_causal_model, model_y, model_t)
+def causal_inference_analysis(model_y, model_t, causal_model,x, y, t, true_ate, true_ate_std, true_ite, is_meta):
+    
     if is_meta:
         start_time = time.time()
         causal_model.fit(y, t, X=x)
@@ -43,6 +43,17 @@ def causal_inference_analysis(model_y, model_t, str_causal_model,x, y, t, true_a
             'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk, 
             'run_time': run_time}, estimated_ite_values
 
+def combination_exists_in_results(key, model_y, model_t, str_causal_model):
+    
+
+    results_df = pd.read_csv(results_file)
+    exists = results_df[
+        (results_df["model_y"] == model_y.__class__.__name__)
+        & (results_df["model_t"] == model_t.__class__.__name__)
+        & (results_df["causal_model_name"] == str_causal_model)
+    ].any().any()
+
+    return exists
     
 
 if __name__ == "__main__":
@@ -76,14 +87,22 @@ if __name__ == "__main__":
 
     # data_dict = {'ihdp':load_ihdp()}
     data_dict = {'twin':load_twin()}
-    all_results = []
+    
     for key in data_dict:
         data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete = data_dict[key]
         scaler = StandardScaler()
         x_scaled = scaler.fit_transform(X)
-
+        results_file = f'results/{key}_no_params_baselines.csv'
+        already_loaded_file = False
+        if not os.path.exists(results_file):
+            results_df = pd.read_csv(results_file)
+            all_results = results_df.to_list()
+            already_loaded_file = True
+        else:
+            all_results = []
         my_list = regressors
         mt_list = classifiers if is_discrete else regressors
+        i = 0
         for str_causal_model in ci_estimators:
             is_meta = False
             if str_causal_model in ['sl', 'xl', 'tl']:
@@ -94,20 +113,34 @@ if __name__ == "__main__":
                     if is_meta and count >= 1:
                         continue
                     try:
-                        temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, str_causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+                        causal_model = get_estimators(str_causal_model, model_y, model_t)
+                        exists = results_df[
+                            (results_df["model_y"] == model_y.__class__.__name__)
+                            & (results_df["model_t"] == model_t.__class__.__name__)
+                            & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                        ].any().any()
+                        if exists:
+                            print(f"Skipping model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
+                            continue
+                        temp_results, estimated_ite_values = causal_inference_analysis(model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
                         temp_results['data'] = key
                         all_results.append(temp_results)
 
-                        results_df = pd.DataFrame(all_results)
+                        if already_loaded_file:
+                            results_df = pd.concat(all_results, axis=0)
+                        else:
+                            results_df = pd.DataFrame(all_results)
 
-                        top_10_scores = results_df.groupby('causal_model_name').apply(lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
-                        top_10_scores_table = wandb.Table(dataframe=top_10_scores)
-                        wandb.log({"top_10_scores_table": top_10_scores_table})
-
-                        results_df.to_csv(f'results/{key}_no_params_baselines.csv')
+                        if i % 50 == 0:
+                            top_10_scores = results_df.groupby('causal_model_name').apply(lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
+                            top_10_scores_table = wandb.Table(dataframe=top_10_scores)
+                            wandb.log({"top_10_scores_table": top_10_scores_table})
+                            results_df.to_csv(f'results/{key}_no_params_baselines.csv')
                         print(f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                     except Exception as e:
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
+                    i += 1
+        results_df.to_csv(f'results/{key}_no_params_baselines.csv')
     wandb.alert(title="Code is done!", )
     wandb.finish()
 

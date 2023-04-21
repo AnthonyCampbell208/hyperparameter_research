@@ -1,0 +1,1 @@
+{"causal_model_name": "SLearner", "model_t": null, "model_y": "RandomForestRegressor", "est_ate": 0.015731809078771697, "true_ate": -0.02520026702269693, "mu_risk": null, "tao_risk": 0.0016754348539764188, "run_time": 61.3824999332428, "data": "twin", "_timestamp": 1682014160.281167, "_runtime": 363.86985301971436, "_step": 8, "_wandb": {"runtime": 364}}
