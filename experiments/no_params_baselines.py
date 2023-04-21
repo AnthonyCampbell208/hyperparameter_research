@@ -116,14 +116,15 @@ if __name__ == "__main__":
                         causal_model = get_estimators(str_causal_model, model_y, model_t)
                         exists = False
                         if os.path.exists(results_file):
-                            exists = results_df[
-                                (results_df["model_y"] == model_y.__class__.__name__)
-                                & (results_df["model_t"] == model_t.__class__.__name__)
-                                & (results_df["causal_model_name"] == causal_model.__class__.__name__)
-                            ].any().any()
-                            if not exists: 
+                            if is_meta:
+                                exists = results_df[
+                                    (results_df["model_y"] == model_y.__class__.__name__)
+                                    & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                                ].any().any()
+                            else:
                                 exists = results_df[
                                 (results_df["model_y"] == model_y.__class__.__name__)
+                                & (results_df["model_t"] == model_t.__class__.__name__)
                                 & (results_df["causal_model_name"] == causal_model.__class__.__name__)
                             ].any().any()
                         if exists:
