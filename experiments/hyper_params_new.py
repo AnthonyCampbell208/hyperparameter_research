@@ -63,8 +63,7 @@ if __name__ == "__main__":
                LogisticRegression(),
                LogisticRegressionCV(),
                MLPClassifier(),
-               DecisionTreeClassifier(),
-               'auto']
+               DecisionTreeClassifier()]
 
     regressors = [GradientBoostingRegressor(),
                 RandomForestRegressor(),
@@ -75,8 +74,7 @@ if __name__ == "__main__":
                 LassoLars(),
                 Ridge(),
                 MLPRegressor(),
-                DecisionTreeRegressor(),
-                'auto']
+                DecisionTreeRegressor()]
 
     wandb.init(project="cs696ds-econml", config={
         "causal_estimators": ci_estimators,
