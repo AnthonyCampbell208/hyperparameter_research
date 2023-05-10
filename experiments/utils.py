@@ -51,30 +51,6 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 # from helpers.utils import init_logger, get_model_name
 
 
-def load_401k():
-    url = "https://raw.githubusercontent.com/CausalAIBook/MetricsMLNotebooks/main/data/401k.csv"
-    data_df = pd.read_csv(url)
-    
-    feature_cols = ["age", "inc", "fsize", "educ", "db", "marr", "male", "twoearn", "pira", "nohs", "hs", "smcol", "col", "hown"]
-    X = data_df[feature_cols]
-    T = data_df['p401']
-    Y = data_df['net_tfa']
-
-    return X, T, Y
-
-def load_abalone():
-    data_df = pd.read_csv("abalone.csv")
-    col =  ["Sex", "Length", "Diameter", "Height", "Whole_weight","Shucked_weight", "Viscera_weight", "Shell_weight", "Rings"]
-    data_df.columns = col
-    feature_col = ["Length", "Diameter", "Height"]
-    outcome_col = ["Rings"]
-    treatment_col = ["Whole_weight"]
-    X = data_df[feature_col]
-    Y = data_df[outcome_col].values.reshape(-1, 1)
-    T = data_df[treatment_col].values.reshape(-1, 1)
-
-    return data_df, X, T, Y
-
 def load_ihdp():
     data= pd.read_csv("https://raw.githubusercontent.com/AMLab-Amsterdam/CEVAE/master/datasets/IHDP/csv/ihdp_npci_1.csv", header = None)
     col =  ["treatment", "y_factual", "y_cfactual", "mu0", "mu1" ,]
