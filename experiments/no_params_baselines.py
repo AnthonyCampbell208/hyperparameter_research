@@ -3,17 +3,13 @@ from utils import *
 import pdb
 import os
 from sklearn.preprocessing import StandardScaler
-# from data_preprocessing.ihdp import *
-# from data_preprocessing.lalonde import *
-# from data_preprocessing.lbidd import *
-# from data_preprocessing.synthetic import *
-# from data_preprocessing.twins import *
 import sys
 import wandb
-# sys.path.insert(0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
+sys.path.insert(
+    0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 k = 2
-ci_estimators = ['sl', 'tl', 'xl', 'dml', 'kernel_dml', 'CausalForestDML']
+ci_estimators = ['tl', 'dml', 'kernel_dml', 'CausalForestDML']
 
 # ci_estimators = ['dr']
 
@@ -59,14 +55,12 @@ def combination_exists_in_results(key, model_y, model_t, str_causal_model):
 
 if __name__ == "__main__":
 
-    classifiers = [GradientBoostingClassifier(),
-                   RandomForestClassifier(),
+    classifiers = [RandomForestClassifier(),
                    LogisticRegressionCV(),
                    MLPClassifier(),
                    'auto']
 
-    regressors = [GradientBoostingRegressor(),
-                  RandomForestRegressor(),
+    regressors = [RandomForestRegressor(),
                   ElasticNetCV(),
                   MLPRegressor(),
                   'auto']
