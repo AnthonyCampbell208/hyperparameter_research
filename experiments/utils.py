@@ -361,6 +361,8 @@ def select_classification_hyperparameters(estimator):
             'alpha': [0.0001, 0.001, 0.01],
             'learning_rate': ['constant', 'adaptive']
         }
+    elif isinstance(estimator, RandomForestClassifier):
+        return { 'n_estimators': [10]}
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for LogisticRegressionCV, RandomForestClassifier, MLPClassifier, and the polynomial pipleine", category=UserWarning)
         return {}
@@ -402,6 +404,8 @@ def select_regression_hyperparameters(estimator):
             'learning_rate': [0.01, 0.1, 1.0],
             'max_depth': [3, 5],
         }
+    elif isinstance(estimator, RandomForestRegressor):
+        return { 'n_estimators': [10]}
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for ElasticNetCV, RandomForestRegressor, MLPRegressor, and the polynomial pipeline.", category=UserWarning)
         return {}
