@@ -82,8 +82,9 @@ if __name__ == "__main__":
         data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete = data_dict[key]
         scaler = StandardScaler()
         x_scaled = scaler.fit_transform(X)
-        results_file = f'results/{key}_no_params_baselines.csv'
+        results_file = f'results/{key}_hyper_params_baselines.csv'
         already_loaded_file = False
+        results_df = None
         if os.path.exists(results_file):
             results_df = pd.read_csv(results_file, index_col=0)
             already_loaded_file = True
@@ -122,13 +123,13 @@ if __name__ == "__main__":
 
                                     # added conditions for param combos for both model_y and model_t (for not is_meta case)
                                     if is_meta:
-                                        exists = results_df[
+                                        exists = (not results_df == None) and results_df[
                                             (results_df["model_y"] == model_y.__class__.__name__)
                                             & (results_df["causal_model_name"] == causal_model.__class__.__name__)
                                             & (results_df["param_y"] == str(param_y))
                                         ].any().any()
                                     else:
-                                        exists = results_df[
+                                        exists = (not results_df == None) and results_df[
                                         (results_df["model_y"] == model_y.__class__.__name__)
                                         & (results_df["model_t"] == model_t.__class__.__name__)
                                         & (results_df["causal_model_name"] == causal_model.__class__.__name__)
@@ -158,6 +159,6 @@ if __name__ == "__main__":
                         print(f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
                     i += 1
                     model_count += 1
-        results_df.to_csv(f"results/{key}_limited_params.csv")
+        results_df.to_csv(f'results/{key}_hyper_params_baselines.csv')
     wandb.alert(title="Code is done!", )
     wandb.finish()
