@@ -60,10 +60,8 @@ if __name__ == "__main__":
     
     classifiers = [GradientBoostingClassifier(),
                RandomForestClassifier(),
-               LogisticRegression(),
                LogisticRegressionCV(),
-               MLPClassifier(),
-               DecisionTreeClassifier()]
+               MLPClassifier(),]
 
     regressors = [GradientBoostingRegressor(),
                 RandomForestRegressor(),

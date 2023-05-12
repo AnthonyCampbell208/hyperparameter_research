@@ -42,8 +42,8 @@ import pickle
 import warnings
 
 import sys
-sys.path.insert(
-    0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
+# sys.path.insert(
+#     0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 
 # from models.data import IHDP, JOBS, TWINS, NEWS
@@ -334,7 +334,8 @@ def select_classification_hyperparameters(estimator):
         return {
             'Cs': [0.01, 0.1, 1],
             'penalty': ['l1', 'l2', 'elasticnet'],
-            'solver': ['lbfgs', 'liblinear', 'saga']
+            'solver': ['lbfgs', 'liblinear', 'saga'],
+            'max_iter': [25]
         }
     elif isinstance(estimator, RandomForestClassifier):
         # Hyperparameter grid for random forest classification model
@@ -359,10 +360,9 @@ def select_classification_hyperparameters(estimator):
             'activation': ['relu'],
             'solver': ['adam'],
             'alpha': [0.0001, 0.001, 0.01],
-            'learning_rate': ['constant', 'adaptive']
+            'learning_rate': ['constant', 'adaptive'],
+            'max_iter': [25]
         }
-    elif isinstance(estimator, RandomForestClassifier):
-        return { 'n_estimators': [10]}
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for LogisticRegressionCV, RandomForestClassifier, MLPClassifier, and the polynomial pipleine", category=UserWarning)
         return {}
@@ -395,7 +395,8 @@ def select_regression_hyperparameters(estimator):
         return {
             'hidden_layer_sizes': [(10,), (50,), (100,)],
             'alpha': [0.0001, 0.001, 0.01],
-            'learning_rate': ['constant', 'adaptive']
+            'learning_rate': ['constant', 'adaptive'],
+            'max_iter': [25]
         }
     elif isinstance(estimator, GradientBoostingRegressor):
         # Hyperparameter grid for gradient boosting regression model
@@ -405,7 +406,7 @@ def select_regression_hyperparameters(estimator):
             'max_depth': [3, 5],
         }
     elif isinstance(estimator, RandomForestRegressor):
-        return { 'n_estimators': [10]}
+        return {'n_estimators': [10]}
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for ElasticNetCV, RandomForestRegressor, MLPRegressor, and the polynomial pipeline.", category=UserWarning)
         return {}
