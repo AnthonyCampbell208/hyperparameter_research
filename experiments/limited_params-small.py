@@ -60,12 +60,12 @@ if __name__ == "__main__":
     
     classifiers = [
                RandomForestClassifier(),
-               LogisticRegression()
+               LogisticRegressionCV()
                ]
 
     regressors = [
                 RandomForestRegressor(),
-                ElasticNet()
+                ElasticNetCV()
                 ]
 
     wandb.init(project="cs696ds-econml", config={
