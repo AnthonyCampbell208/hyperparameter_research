@@ -339,7 +339,7 @@ def select_classification_hyperparameters(estimator):
     elif isinstance(estimator, RandomForestClassifier):
         # Hyperparameter grid for random forest classification model
         return {
-            'n_estimators': [100, 500],
+            'n_estimators': [25],
             'max_depth': [None, 5, 10, 20],
             'min_samples_split': [2, 5],
             'min_samples_leaf': [1, 2]
@@ -382,11 +382,11 @@ def select_regression_hyperparameters(estimator):
     if isinstance(estimator, ElasticNetCV):
         return {
             'l1_ratio': [0.1, 0.5, 0.9],
-            'max_iter': [1000],
+            'max_iter': [100],
         }
     elif isinstance(estimator, RandomForestRegressor):
         return {
-            'n_estimators': [50],
+            'n_estimators': [25],
             'max_depth': [None, 10, 50],
             'min_samples_split': [2, 5, 10],
         }
