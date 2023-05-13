@@ -57,12 +57,12 @@ if __name__ == "__main__":
 
     classifiers = [RandomForestClassifier(),
                    LogisticRegressionCV(max_iter=25),
-                   MLPClassifier(max_iter=50),
+                   MLPClassifier(max_iter=25),
                    'auto']
 
     regressors = [RandomForestRegressor(),
                   ElasticNetCV(max_iter=100),
-                  MLPRegressor(max_iter=50),
+                  MLPRegressor(max_iter=25),
                   'auto']
 
     wandb.init(project="cs696ds-econml", config={
