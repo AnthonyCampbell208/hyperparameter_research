@@ -53,8 +53,7 @@ def combination_exists_in_results(key, model_y, model_t, str_causal_model):
     return exists
 
 
-if __name__ == "__main__":
-
+def main():
     classifiers = [RandomForestClassifier(),
                    LogisticRegressionCV(),
                    MLPClassifier(), ]
@@ -356,3 +355,6 @@ if __name__ == "__main__":
             results_df.to_csv(f"results/{key}_before_crossfit_params.csv")
         # wandb.alert(title="Code is done!", text="Code is done!")
         # wandb.finish()
+
+if __name__ == "__main__":
+    main()
