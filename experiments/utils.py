@@ -333,7 +333,7 @@ def select_classification_hyperparameters(estimator):
         # Hyperparameter grid for linear classification model
         return {
             'Cs': [0.01, 0.1, 1],
-            'penalty': ['l1', 'l2', 'elasticnet'],
+            'penalty': ['elasticnet'],
             'solver': ['lbfgs', 'liblinear', 'saga'],
             'max_iter': [25]
         }
@@ -382,7 +382,7 @@ def select_regression_hyperparameters(estimator):
     if isinstance(estimator, ElasticNetCV):
         return {
             'l1_ratio': [0.1, 0.5, 0.9],
-            'max_iter': [100],
+            'max_iter': [50],
         }
     elif isinstance(estimator, RandomForestRegressor):
         return {

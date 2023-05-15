@@ -91,6 +91,7 @@ if __name__ == "__main__":
             all_results = results_df.to_dict('records')
         else:
             all_results = []
+            results_df = pd.DataFrame(all_results)
         my_list = regressors
         mt_list = classifiers if is_discrete else regressors
         i = 0
