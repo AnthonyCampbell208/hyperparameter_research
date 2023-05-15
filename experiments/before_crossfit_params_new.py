@@ -50,7 +50,7 @@ def acic_dataset_analysis(key, ci_estimator_list):
         data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete, file_name = acic_data
         scaler = StandardScaler()
         x_scaled = scaler.fit_transform(X)
-        results_file = f'results/{key}_before_crossfit_params_new.csv'
+        results_file = f'results/{acic_data}_before_crossfit_params_new.csv'
         already_loaded_file = False
         if os.path.exists(results_file):
             results_df = pd.read_csv(results_file, index_col=0)
@@ -156,14 +156,14 @@ def acic_dataset_analysis(key, ci_estimator_list):
                             continue
                         temp_results, estimated_ite_values = causal_inference_analysis(
                             model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
-                        temp_results['data'] = key
+                        temp_results['data'] = acic_data
                         temp_results['file_name'] = file_name
                         temp_results['best_model_y_params'] = best_params_y
                         temp_results['best_model_t_params'] = best_params_t
                         all_results.append(temp_results)
                         results_df = pd.DataFrame(all_results)
                         results_df.to_csv(
-                            f'results/{key}_before_crossfit_params.csv')
+                            f'results/{acic_data}_before_crossfit_params.csv')
                         print(
                             f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                     except Exception as e:
@@ -171,7 +171,7 @@ def acic_dataset_analysis(key, ci_estimator_list):
                             f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
                     i += 1
                     count += 1
-        results_df.to_csv(f"results/{key}_before_crossfit_params_new.csv")
+        results_df.to_csv(f"results/{acic_data}_before_crossfit_params_new.csv")
 
 def main(ci_estimator_list, model_y, model_t, key, k):
     np.random.seed = 42
