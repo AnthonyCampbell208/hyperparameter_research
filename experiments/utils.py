@@ -328,8 +328,8 @@ def select_classification_hyperparameters(estimator):
     Returns:
         A dictionary representing the hyperparameter grid to search over.
     """
-
-    if isinstance(estimator, LogisticRegressionCV):
+    # print('Enter')
+    if isinstance(estimator, LogisticRegressionCV) or estimator == 'linear':
         # Hyperparameter grid for linear classification model
         return {
             'Cs': [0.01, 0.1, 1],
@@ -337,7 +337,7 @@ def select_classification_hyperparameters(estimator):
             'solver': ['lbfgs', 'liblinear', 'saga'],
             'max_iter': [25]
         }
-    elif isinstance(estimator, RandomForestClassifier):
+    elif isinstance(estimator, RandomForestClassifier) or estimator == 'forest':
         # Hyperparameter grid for random forest classification model
         return {
             'n_estimators': [25],
@@ -345,7 +345,7 @@ def select_classification_hyperparameters(estimator):
             'min_samples_split': [2, 5],
             'min_samples_leaf': [1, 2]
         }
-    elif isinstance(estimator, GradientBoostingClassifier):
+    elif isinstance(estimator, GradientBoostingClassifier) or estimator == 'gbf':
         # Hyperparameter grid for gradient boosting classification model
         return {
             'n_estimators': [100, 500],
@@ -353,7 +353,7 @@ def select_classification_hyperparameters(estimator):
             'max_depth': [3, 5, 7],
 
         }
-    elif isinstance(estimator, MLPClassifier):
+    elif isinstance(estimator, MLPClassifier) or estimator == 'nnet':
         # Hyperparameter grid for neural network classification model
         return {
             'hidden_layer_sizes': [(10,), (50,), (100,)],
@@ -379,18 +379,18 @@ def select_regression_hyperparameters(estimator):
     Returns:
         A dictionary of hyperparameters to be searched over using a grid search.
     """
-    if isinstance(estimator, ElasticNetCV):
+    if  isinstance(estimator, ElasticNetCV) or estimator == 'linear':
         return {
             'l1_ratio': [0.1, 0.5, 0.9],
             'max_iter': [50],
         }
-    elif isinstance(estimator, RandomForestRegressor):
+    elif isinstance(estimator, RandomForestRegressor) or estimator == 'forest':
         return {
             'n_estimators': [25],
             'max_depth': [None, 10, 50],
             'min_samples_split': [2, 5, 10],
         }
-    elif isinstance(estimator, MLPRegressor):
+    elif isinstance(estimator, MLPRegressor) or estimator == 'nnet':
         # Hyperparameter grid for neural network classification model
         return {
             'hidden_layer_sizes': [(10,), (50,), (100,)],
@@ -398,14 +398,14 @@ def select_regression_hyperparameters(estimator):
             'learning_rate': ['constant', 'adaptive'],
             'max_iter': [25]
         }
-    elif isinstance(estimator, GradientBoostingRegressor):
+    elif isinstance(estimator, GradientBoostingRegressor) or estimator == 'gbf':
         # Hyperparameter grid for gradient boosting regression model
         return {
             'n_estimators': [100],
             'learning_rate': [0.01, 0.1, 1.0],
             'max_depth': [3, 5],
         }
-    elif isinstance(estimator, RandomForestRegressor):
+    elif isinstance(estimator, RandomForestRegressor) or estimator == 'forest':
         return {'n_estimators': [10]}
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for ElasticNetCV, RandomForestRegressor, MLPRegressor, and the polynomial pipeline.", category=UserWarning)
