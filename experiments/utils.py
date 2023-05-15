@@ -169,21 +169,21 @@ def load_twin():
 
 def load_acic():
     acic_datalist = [
-        'ACIC_dataset/high_binary_datasets.pickle',
-        'ACIC_dataset/low_binary_datasets.pickle',
-        'ACIC_dataset/high_continuous_datasets.pickle',
-        'ACIC_dataset/low_continuous_datasets.pickle'
+        '../ACIC_dataset/high_binary_datasets.pickle',
+        '../ACIC_dataset/low_binary_datasets.pickle',
+        '../ACIC_dataset/high_continuous_datasets.pickle',
+        '../ACIC_dataset/low_continuous_datasets.pickle'
     ]
 
-    highDim_trueATE = pd.read_csv("ACIC_dataset/true_ate/highDim_trueATE.csv")
-    lowDim_trueATE = pd.read_csv("ACIC_dataset/true_ate/lowDim_trueATE.csv")
+    highDim_trueATE = pd.read_csv("../ACIC_dataset/true_ate/highDim_trueATE.csv")
+    lowDim_trueATE = pd.read_csv("../ACIC_dataset/true_ate/lowDim_trueATE.csv")
 
     for file in acic_datalist:
         with open(file, 'rb') as f:
             data_file_list = pickle.load(f)
 
         for j, data_file in enumerate(data_file_list):
-            data = pd.read_csv(data_file)
+            data = pd.read_csv(f'../{data_file}')
             y_col = 'Y'
             treatment_col = 'A'
             covariate_cols = data.columns.drop([y_col, treatment_col])
