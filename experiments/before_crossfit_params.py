@@ -70,9 +70,9 @@ if __name__ == "__main__":
     # })
     # config = wandb.config
     np.random.seed = 42
-    # data_dict = {'ihdp':load_ihdp()}
-    # data_dict = {'twin':load_twin()}
-    data_dict = {'acic': None}
+    # data_dict = {}
+    data_dict = {}
+    data_dict = {'acic': None, 'twin': load_twin(), 'ihdp': load_ihdp()}
     # pdb.set_trace()
     for key in data_dict:
         if key == 'acic':
@@ -162,10 +162,10 @@ if __name__ == "__main__":
                                         model_y, params_model_y, cv=3)
                                     grid_search_y.fit(X, Y)
                                     best_params_y = grid_search_y.best_params_
-                                # pdb.set_trace()
                                 model_t.set_params(**best_params_t)
                                 model_y.set_params(**best_params_y)
-
+                                # if str_causal_model == 'dml':
+                                #     pdb.set_trace()
                                 causal_model = get_estimators(
                                     str_causal_model, model_y, model_t)
                                 exists = False

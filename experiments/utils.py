@@ -42,8 +42,8 @@ import pickle
 import warnings
 
 import sys
-# sys.path.insert(
-#     0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
+sys.path.insert(
+    0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 
 # from models.data import IHDP, JOBS, TWINS, NEWS
@@ -332,15 +332,15 @@ def select_classification_hyperparameters(estimator):
     if isinstance(estimator, LogisticRegressionCV):
         # Hyperparameter grid for linear classification model
         return {
+            'tol': [.01, 0.001],
             'Cs': [0.01, 0.1, 1],
             'penalty': ['l1', 'l2', 'elasticnet'],
             'solver': ['lbfgs', 'liblinear', 'saga'],
-            'max_iter': [25]
         }
     elif isinstance(estimator, RandomForestClassifier):
         # Hyperparameter grid for random forest classification model
         return {
-            'n_estimators': [25],
+            'n_estimators': [25, 50, 100],
             'max_depth': [None, 5, 10, 20],
             'min_samples_split': [2, 5],
             'min_samples_leaf': [1, 2]
@@ -356,12 +356,12 @@ def select_classification_hyperparameters(estimator):
     elif isinstance(estimator, MLPClassifier):
         # Hyperparameter grid for neural network classification model
         return {
+            'tol': [.01, 0.001],
             'hidden_layer_sizes': [(10,), (50,), (100,)],
             'activation': ['relu'],
             'solver': ['adam'],
             'alpha': [0.0001, 0.001, 0.01],
             'learning_rate': ['constant', 'adaptive'],
-            'max_iter': [25]
         }
     else:
         warnings.warn("No hyperparameters for this type of model. There are default hyperparameters for LogisticRegressionCV, RandomForestClassifier, MLPClassifier, and the polynomial pipleine", category=UserWarning)
@@ -381,8 +381,9 @@ def select_regression_hyperparameters(estimator):
     """
     if isinstance(estimator, ElasticNetCV):
         return {
+            'tol': [.01, 0.001],
             'l1_ratio': [0.1, 0.5, 0.9],
-            'max_iter': [100],
+            'max_iter': [100, 500, 1000],
         }
     elif isinstance(estimator, RandomForestRegressor):
         return {
@@ -393,10 +394,10 @@ def select_regression_hyperparameters(estimator):
     elif isinstance(estimator, MLPRegressor):
         # Hyperparameter grid for neural network classification model
         return {
+            'tol': [.01, 0.001],
             'hidden_layer_sizes': [(10,), (50,), (100,)],
             'alpha': [0.0001, 0.001, 0.01],
             'learning_rate': ['constant', 'adaptive'],
-            'max_iter': [25]
         }
     elif isinstance(estimator, GradientBoostingRegressor):
         # Hyperparameter grid for gradient boosting regression model
