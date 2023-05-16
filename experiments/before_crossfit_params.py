@@ -9,7 +9,7 @@ sys.path.insert(
     0, '/Users/anthonycampbell/miniforge3/pkgs/econml-0.13.1-py39h533cade_0/lib/python3.9/site-packages/')
 
 k = 2
-ci_estimators = ['tl', 'dml', 'kernel_dml', 'CausalForestDML']
+ci_estimators = ['tl', 'dml', 'CausalForestDML']
 
 # ci_estimators = ['dr']
 
@@ -41,26 +41,14 @@ def causal_inference_analysis(model_y, model_t, causal_model, x, y, t, true_ate,
                 'run_time': run_time}, estimated_ite_values
 
 
-def combination_exists_in_results(key, model_y, model_t, str_causal_model):
-
-    results_df = pd.read_csv(results_file)
-    exists = results_df[
-        (results_df["model_y"] == model_y.__class__.__name__)
-        & (results_df["model_t"] == model_t.__class__.__name__)
-        & (results_df["causal_model_name"] == str_causal_model)
-    ].any().any()
-
-    return exists
-
-
 def main():
     classifiers = [RandomForestClassifier(),
                    LogisticRegressionCV(),
-                   MLPClassifier(), ]
+                   ]
 
     regressors = [RandomForestRegressor(),
                   ElasticNetCV(),
-                  MLPRegressor(), ]
+                  ]
 
     # wandb.init(project="cs696ds-econml", config={
     #     "causal_estimators": ci_estimators,
@@ -71,7 +59,7 @@ def main():
     np.random.seed = 42
     # data_dict = {}
     data_dict = {}
-    data_dict = {'acic': None, 'twin': load_twin(), 'ihdp': load_ihdp()}
+    data_dict = {'twin': load_twin(), 'ihdp': load_ihdp(), 'acic': None}
     # pdb.set_trace()
     for key in data_dict:
         if key == 'acic':
@@ -230,8 +218,8 @@ def main():
             else:
                 all_results = []
                 results_df = pd.DataFrame()
-            my_list = regressors
-            mt_list = classifiers if is_discrete else regressors
+            my_list = classifiers if is_discrete else regressors
+            mt_list = classifiers
             i = 0
             for str_causal_model in ci_estimators:
                 is_meta = False
@@ -355,6 +343,7 @@ def main():
             results_df.to_csv(f"results/{key}_before_crossfit_params.csv")
         # wandb.alert(title="Code is done!", text="Code is done!")
         # wandb.finish()
+
 
 if __name__ == "__main__":
     main()

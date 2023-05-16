@@ -75,7 +75,7 @@ def load_ihdp():
     true_ATE = np.mean(true_ite)
     true_ATE_stderr = np.std(true_ite)
 
-    is_discrete = True
+    is_discrete = False
 
     return data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete
 
@@ -333,9 +333,9 @@ def select_classification_hyperparameters(estimator):
         # Hyperparameter grid for linear classification model
         return {
             'tol': [.01, 0.001],
-            'Cs': [0.01, 0.1, 1],
+            'Cs': [0.01, 0.1, 0.99],
             'penalty': ['elasticnet'],
-            'solver': ['lbfgs', 'liblinear', 'saga'],
+            'solver': ['lbfgs', 'saga'],
         }
     elif isinstance(estimator, RandomForestClassifier) or estimator == 'forest':
         # Hyperparameter grid for random forest classification model
@@ -379,15 +379,11 @@ def select_regression_hyperparameters(estimator):
     Returns:
         A dictionary of hyperparameters to be searched over using a grid search.
     """
-    if  isinstance(estimator, ElasticNetCV) or estimator == 'linear':
+    if isinstance(estimator, ElasticNetCV) or estimator == 'linear':
         return {
             'tol': [.01, 0.001],
             'l1_ratio': [0.1, 0.5, 0.9],
-<<<<<<< HEAD
             'max_iter': [100, 500, 1000],
-=======
-            'max_iter': [50],
->>>>>>> 05b5aac2fdcc08ba579c173fe7ff044f9a0971e0
         }
     elif isinstance(estimator, RandomForestRegressor) or estimator == 'forest':
         return {

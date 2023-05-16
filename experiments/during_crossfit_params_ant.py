@@ -69,7 +69,7 @@ if __name__ == "__main__":
     np.random.seed(42)
     # data_dict = {}
     data_dict = {}
-    data_dict = {'acic': None, 'twin': load_twin(), 'ihdp': load_ihdp()}
+    data_dict = {'ihdp': load_ihdp(), 'twin': load_twin(), 'acic': None, }
     # pdb.set_trace()
     for key in data_dict:
         if key == 'acic':
@@ -119,7 +119,7 @@ if __name__ == "__main__":
                                     model_t)
                                 grid_search_t = GridSearchCV(
                                     model_t, params_model_t, cv=3)
-                                grid_search_t.fit(X_train, Y_train)
+                                grid_search_t.fit(X_train, T_train)
                                 best_params_t = grid_search_t.best_params_
 
                                 grid_search_y = GridSearchCV(
@@ -181,8 +181,8 @@ if __name__ == "__main__":
             else:
                 all_results = []
                 results_df = pd.DataFrame()
-            my_list = regressors
-            mt_list = classifiers if is_discrete else regressors
+            my_list = classifiers if is_discrete else regressors
+            mt_list = classifiers
             i = 0
 
             kf = KFold(n_splits=2, shuffle=True)
@@ -195,7 +195,6 @@ if __name__ == "__main__":
                     count = 0
                     for model_t in mt_list:
                         try:
-
                             if os.path.exists(results_file):
                                 exists = results_df[
                                     (results_df["model_y"] ==
@@ -207,13 +206,19 @@ if __name__ == "__main__":
                                     print(
                                         f"Skipping model_y: {model_y}, model_t: {model_t}")
                                     continue
-                            params_model_y = select_classification_hyperparameters(
-                                model_y) if is_discrete else select_regression_hyperparameters(model_y)
+
+                            if is_discrete:
+                                params_model_y = select_classification_hyperparameters(
+                                    model_y)
+                            else:
+                                params_model_y = select_regression_hyperparameters(
+                                    model_y)
                             params_model_t = select_classification_hyperparameters(
                                 model_t)
+                            # pdb.set_trace()
                             grid_search_t = GridSearchCV(
                                 model_t, params_model_t, cv=3)
-                            grid_search_t.fit(X_train, Y_train)
+                            grid_search_t.fit(X_train, T_train)
                             best_params_t = grid_search_t.best_params_
 
                             grid_search_y = GridSearchCV(

@@ -65,13 +65,7 @@ if __name__ == "__main__":
                   #   MLPRegressor(max_iter=25),
                   'auto']
 
-    wandb.init(project="cs696ds-econml", config={
-        "causal_estimators": ci_estimators,
-        "classifiers": classifiers,
-        "regressors": regressors,
-    })
-    config = wandb.config
-    np.random.seed = 42
+    np.random.seed(42)
     # data_dict = {'ihdp':load_ihdp()}
     # data_dict = {'twin':load_twin()}
     data_dict = {'acic': None}
@@ -132,19 +126,19 @@ if __name__ == "__main__":
                                 all_results.append(temp_results)
                                 results_df = pd.DataFrame(all_results)
 
-                                if i % 10 == 0:
-                                    most_recent = results_df.tail(10)
-                                    recent_10_table = wandb.Table(
-                                        dataframe=most_recent)
-                                    wandb.log(
-                                        {"most_recent_10_scores_table": recent_10_table})
-                                if i % 50 == 0:
-                                    top_10_scores = results_df.groupby('causal_model_name').apply(
-                                        lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
-                                    top_10_scores_table = wandb.Table(
-                                        dataframe=top_10_scores)
-                                    wandb.log(
-                                        {"top_10_scores_table": top_10_scores_table})
+                                # if i % 10 == 0:
+                                #     most_recent = results_df.tail(10)
+                                #     recent_10_table = wandb.Table(
+                                #         dataframe=most_recent)
+                                #     wandb.log(
+                                #         {"most_recent_10_scores_table": recent_10_table})
+                                # if i % 50 == 0:
+                                #     top_10_scores = results_df.groupby('causal_model_name').apply(
+                                #         lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
+                                #     top_10_scores_table = wandb.Table(
+                                #         dataframe=top_10_scores)
+                                #     wandb.log(
+                                #         {"top_10_scores_table": top_10_scores_table})
                                 results_df.to_csv(
                                     f'results/{key}_no_params_baselines.csv')
                                 print(
@@ -208,21 +202,21 @@ if __name__ == "__main__":
                             all_results.append(temp_results)
                             results_df = pd.DataFrame(all_results)
 
-                            if i % 10 == 0:
-                                most_recent = results_df.tail(10)
-                                recent_10_table = wandb.Table(
-                                    dataframe=most_recent)
-                                wandb.log(
-                                    {"most_recent_10_scores_table": recent_10_table})
-                            if i % 50 == 0:
-                                top_10_scores = results_df.groupby('causal_model_name').apply(
-                                    lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
-                                top_10_scores_table = wandb.Table(
-                                    dataframe=top_10_scores)
-                                wandb.log(
-                                    {"top_10_scores_table": top_10_scores_table})
-                                results_df.to_csv(
-                                    f'results/{key}_no_params_baselines.csv')
+                            # if i % 10 == 0:
+                            #     most_recent = results_df.tail(10)
+                            #     recent_10_table = wandb.Table(
+                            #         dataframe=most_recent)
+                            #     wandb.log(
+                            #         {"most_recent_10_scores_table": recent_10_table})
+                            # if i % 50 == 0:
+                            #     top_10_scores = results_df.groupby('causal_model_name').apply(
+                            #         lambda x: x.nsmallest(10, 'tao_risk')).reset_index(drop=True)
+                            #     top_10_scores_table = wandb.Table(
+                            #         dataframe=top_10_scores)
+                            #     wandb.log(
+                            #         {"top_10_scores_table": top_10_scores_table})
+                            results_df.to_csv(
+                                f'results/{key}_no_params_baselines.csv')
                             print(
                                 f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                         except Exception as e:
@@ -231,5 +225,3 @@ if __name__ == "__main__":
                         i += 1
                         count += 1
             results_df.to_csv(f"results/{key}_no_params_baselines.csv")
-        wandb.alert(title="Code is done!", text="Code is done!")
-        wandb.finish()
