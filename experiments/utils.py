@@ -168,22 +168,23 @@ def load_twin():
 
 
 def load_acic():
+    # pdb.set_trace()
     acic_datalist = [
-        '../ACIC_dataset/high_binary_datasets.pickle',
-        '../ACIC_dataset/low_binary_datasets.pickle',
-        '../ACIC_dataset/high_continuous_datasets.pickle',
-        '../ACIC_dataset/low_continuous_datasets.pickle'
+        'ACIC_dataset/high_binary_datasets.pickle',
+        'ACIC_dataset/low_binary_datasets.pickle',
+        'ACIC_dataset/high_continuous_datasets.pickle',
+        'ACIC_dataset/low_continuous_datasets.pickle'
     ]
 
-    highDim_trueATE = pd.read_csv("../ACIC_dataset/true_ate/highDim_trueATE.csv")
-    lowDim_trueATE = pd.read_csv("../ACIC_dataset/true_ate/lowDim_trueATE.csv")
+    highDim_trueATE = pd.read_csv("ACIC_dataset/true_ate/highDim_trueATE.csv")
+    lowDim_trueATE = pd.read_csv("ACIC_dataset/true_ate/lowDim_trueATE.csv")
 
     for file in acic_datalist:
         with open(file, 'rb') as f:
             data_file_list = pickle.load(f)
 
         for j, data_file in enumerate(data_file_list):
-            data = pd.read_csv(f'../{data_file}')
+            data = pd.read_csv(f'{data_file}')
             y_col = 'Y'
             treatment_col = 'A'
             covariate_cols = data.columns.drop([y_col, treatment_col])
@@ -225,13 +226,14 @@ def calculate_risks(true_ate, estimated_ate, true_ite_values, estimated_ite_valu
     tau_risk = (true_ate - estimated_ate) ** 2
 
     # Compute mu risk
-    if true_ite_values == None:
-        mu_risk = None
-    else:
-        if len(true_ite_values) != len(estimated_ite_values):
-            mu_risk = None
-        else:
-            mu_risk = np.mean((true_ite_values - estimated_ite_values) ** 2)
+    mu_risk = None
+    # if true_ite_values == None:
+    #     mu_risk = None
+    # else:
+    #     if len(true_ite_values) != len(estimated_ite_values):
+    #         mu_risk = None
+    #     else:
+    #         mu_risk = np.mean((true_ite_values - estimated_ite_values) ** 2)
 
     return tau_risk, mu_risk
 

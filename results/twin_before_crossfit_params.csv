@@ -1,1 +1,4 @@
-""
+,causal_model_name,model_t,model_y,est_ate,true_ate,mu_risk,tao_risk,run_time,data,best_model_y_params,best_model_t_params
+0,TLearner,,RandomForestClassifier,0.0317089452603471,-0.0252002670226969,,0.0032386584426765,0.2214930057525634,twin,"{'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 25}","{'max_depth': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100}"
+1,LinearDML,RandomForestClassifier,RandomForestClassifier,0.0463695475992851,-0.0252002670226969,,0.0051222383650248,2.977341890335083,twin,"{'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 25}","{'max_depth': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100}"
+2,CausalForestDML,RandomForestClassifier,RandomForestClassifier,0.02319959217129029,-0.02520026702269693,,0.002342546369997789,2.9067070484161377,twin,"{'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 25}","{'max_depth': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100}"

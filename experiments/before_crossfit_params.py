@@ -27,6 +27,7 @@ def causal_inference_analysis(model_y, model_t, causal_model, x, y, t, true_ate,
     estimated_ate = causal_model.ate(x)
 
     estimated_ite_values = causal_model.effect(x)
+    # pdb.set_trace()
 
     tao_risk, mu_risk = calculate_risks(
         true_ate, estimated_ate, true_ite, estimated_ite_values)
@@ -59,7 +60,7 @@ def main():
     np.random.seed = 42
     # data_dict = {}
     data_dict = {}
-    data_dict = {'twin': load_twin(), 'ihdp': load_ihdp(), 'acic': None}
+    data_dict = {'acic': None, 'twin': load_twin(), 'ihdp': load_ihdp()}
     # pdb.set_trace()
     for key in data_dict:
         if key == 'acic':
@@ -231,6 +232,7 @@ def main():
                         if is_meta and count >= 1:
                             continue
                         try:
+                            # pdb.set_trace()
                             params_model_y = select_classification_hyperparameters(
                                 model_y) if is_discrete else select_regression_hyperparameters(model_y)
                             params_model_t = select_classification_hyperparameters(
@@ -331,8 +333,8 @@ def main():
                             #         dataframe=top_10_scores)
                             #     wandb.log(
                             #         {"top_10_scores_table": top_10_scores_table})
-                            #     results_df.to_csv(
-                            #         f'results/{key}_before_crossfit_params.csv')
+                            results_df.to_csv(
+                                f'results/{key}_before_crossfit_params.csv')
                             # print(
                             #     f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
                         except Exception as e:

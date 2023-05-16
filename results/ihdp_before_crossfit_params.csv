@@ -1,1 +1,4 @@
-""
+,causal_model_name,model_t,model_y,est_ate,true_ate,mu_risk,tao_risk,run_time,data,best_model_y_params,best_model_t_params
+0,TLearner,,RandomForestRegressor,3.881537627921468,4.016066896118338,,0.0180981240015854,0.0476129055023193,ihdp,"{'max_depth': None, 'min_samples_split': 10, 'n_estimators': 25}","{'max_depth': 5, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 50}"
+1,TLearner,,ElasticNetCV,3.9586987825278417,4.016066896118338,,0.0032911004569321,0.0261671543121337,ihdp,"{'l1_ratio': 0.9, 'max_iter': 100, 'tol': 0.01}","{'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 25}"
+2,LinearDML,RandomForestClassifier,RandomForestRegressor,3.10098855260988,4.016066896118338,,0.8373683747581834,1.1664788722991943,ihdp,"{'max_depth': None, 'min_samples_split': 10, 'n_estimators': 25}","{'max_depth': 5, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 25}"
