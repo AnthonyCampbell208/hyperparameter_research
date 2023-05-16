@@ -1,0 +1,315 @@
+import time
+from utils import *
+import pdb
+import os
+from sklearn.preprocessing import StandardScaler
+import sys
+
+
+def causal_inference_analysis(model_y, model_t, causal_model, x, y, t, true_ate, true_ate_std, true_ite, is_meta):
+    if is_meta:
+        start_time = time.time()
+        causal_model.fit(y, t, X=x)
+        run_time = time.time() - start_time
+    else:
+        start_time = time.time()
+        causal_model.fit(y, t, X=x, W=None)
+        run_time = time.time() - start_time
+
+    estimated_ate = causal_model.ate(x)
+
+    estimated_ite_values = causal_model.effect(x)
+
+    tao_risk, mu_risk = calculate_risks(
+        true_ate, estimated_ate, true_ite, estimated_ite_values)
+
+    if is_meta:
+        return {'causal_model_name': causal_model.__class__.__name__, 'model_t': None, 'model_y': model_y.__class__.__name__,
+                'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk,
+                'run_time': run_time}, estimated_ite_values
+    else:
+        return {'causal_model_name': causal_model.__class__.__name__, 'model_t': model_t.__class__.__name__, 'model_y': model_y.__class__.__name__,
+                'est_ate': estimated_ate, 'true_ate': true_ate, 'mu_risk': mu_risk, 'tao_risk': tao_risk,
+                'run_time': run_time}, estimated_ite_values
+
+
+def combination_exists_in_results(key, model_y, model_t, str_causal_model, results_file):
+
+    results_df = pd.read_csv(results_file)
+    exists = results_df[
+        (results_df["model_y"] == model_y.__class__.__name__)
+        & (results_df["model_t"] == model_t.__class__.__name__)
+        & (results_df["causal_model_name"] == str_causal_model)
+    ].any().any()
+
+    return exists
+
+def acic_dataset_analysis(key, ci_estimator_list):
+    iterator = load_acic()
+    for acic_data in iterator:
+        data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete, file_name = acic_data
+        scaler = StandardScaler()
+        x_scaled = scaler.fit_transform(X)
+        results_file = f'results/{acic_data}_before_crossfit_params_new.csv'
+        already_loaded_file = False
+        if os.path.exists(results_file):
+            results_df = pd.read_csv(results_file, index_col=0)
+            already_loaded_file = True
+            all_results = results_df.to_dict('records')
+        else:
+            all_results = []
+            results_df = pd.DataFrame()
+        my_list = classifiers if is_discrete else regressors
+        mt_list = classifiers
+        i = 0
+        for str_causal_model in ci_estimator_list:
+            is_meta = False
+            if str_causal_model in ['sl', 'xl', 'tl']:
+                is_meta = True
+            for model_y in my_list:
+                count = 0
+                for model_t in mt_list:
+                    if is_meta and count >= 1:
+                        continue
+                    try:
+                        params_model_y = select_classification_hyperparameters(
+                            model_y) if is_discrete else select_regression_hyperparameters(model_y)
+                        params_model_t = select_classification_hyperparameters(
+                            model_t)
+
+                        if len(results_df) > 0:
+                            model_t_params_exists = results_df[
+                                (results_df["model_t"] ==
+                                    model_t.__class__.__name__)
+                                & (results_df['data'] == key) &
+                                (results_df['file_name'] == file_name)
+                            ].any().any()
+                            if model_t_params_exists:
+                                best_params_t = eval(results_df.loc[
+                                    (results_df["model_t"] ==
+                                        model_t.__class__.__name__)
+                                    & (results_df['data'] == key) &
+                                    (results_df['file_name']
+                                        == file_name),
+                                    'best_model_t_params'
+                                ].values[0])
+                            else:
+                                grid_search_t = GridSearchCV(
+                                    model_t, params_model_t, cv=3)
+                                grid_search_t.fit(X, T)
+                                best_params_t = grid_search_t.best_params_
+                        else:
+                            grid_search_t = GridSearchCV(
+                                model_t, params_model_t, cv=3)
+                            grid_search_t.fit(X, T)
+                            best_params_t = grid_search_t.best_params_
+
+                        if len(results_df) > 0:
+                            model_y_params_exists = results_df[
+                                (results_df["model_y"] ==
+                                    model_y.__class__.__name__)
+                                & (results_df['data'] == key) &
+                                (results_df['file_name'] == file_name)
+                            ].any().any()
+
+                            if model_y_params_exists:
+                                best_params_y = eval(results_df.loc[
+                                    (results_df["model_y"] ==
+                                        model_y.__class__.__name__)
+                                    & (results_df['data'] == key) &
+                                    (results_df['file_name']
+                                        == file_name),
+                                    'best_model_y_params'
+                                ].values[0])
+                            else:
+                                grid_search_y = GridSearchCV(
+                                    model_y, params_model_y, cv=3)
+                                grid_search_y.fit(X, Y)
+                                best_params_y = grid_search_y.best_params_
+                        else:
+                            grid_search_y = GridSearchCV(
+                                model_y, params_model_y, cv=3)
+                            grid_search_y.fit(X, Y)
+                            best_params_y = grid_search_y.best_params_
+                        model_t.set_params(**best_params_t)
+                        model_y.set_params(**best_params_y)
+
+                        causal_model = get_estimators(
+                            str_causal_model, model_y, model_t)
+                        exists = False
+                        if os.path.exists(results_file):
+                            if is_meta:
+                                exists = results_df[
+                                    (results_df["model_y"] == model_y.__class__.__name__) & (
+                                        results_df["causal_model_name"] == causal_model.__class__.__name__) & (results_df['file_name'] == file_name)
+                                ].any().any()
+                            else:
+                                exists = results_df[
+                                    (results_df["model_y"] ==
+                                        model_y.__class__.__name__)
+                                    & (results_df["model_t"] == model_t.__class__.__name__)
+                                    & (results_df["causal_model_name"] == causal_model.__class__.__name__) & (results_df['file_name'] == file_name)
+                                ].any().any()
+                        if exists:
+                            print(
+                                f"Skipping model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
+                            continue
+                        temp_results, estimated_ite_values = causal_inference_analysis(
+                            model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+                        temp_results['data'] = acic_data
+                        temp_results['file_name'] = file_name
+                        temp_results['best_model_y_params'] = best_params_y
+                        temp_results['best_model_t_params'] = best_params_t
+                        all_results.append(temp_results)
+                        results_df = pd.DataFrame(all_results)
+                        results_df.to_csv(
+                            f'results/{acic_data}_before_crossfit_params.csv')
+                        print(
+                            f"Completed running model_y: {model_y}, model_t: {model_t}, str_causal_model: {str_causal_model}")
+                    except Exception as e:
+                        print(
+                            f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
+                    i += 1
+                    count += 1
+        results_df.to_csv(f"results/{acic_data}_before_crossfit_params_new.csv")
+
+def main(ci_estimator_list, model_y, model_t, key, k):
+    np.random.seed = 42
+    data_dict = {'acic': None, 'ihdp': load_ihdp(), 'twin': load_twin()}
+
+    if key == 'acic':
+        acic_dataset_analysis(key)
+        return
+
+    data, X, T, Y, true_ite, true_ATE, true_ATE_stderr, is_discrete = data_dict[key]
+    scaler = StandardScaler()
+    x_scaled = scaler.fit_transform(X)
+    results_file = f'results/{key}_before_crossfit_params.csv'
+    already_loaded_file = False
+    if os.path.exists(results_file):
+        results_df = pd.read_csv(results_file, index_col=0)
+        already_loaded_file = True
+        all_results = results_df.to_dict('records')
+    else:
+        all_results = []
+        results_df = pd.DataFrame()
+
+    my_list = regressors
+    mt_list = classifiers if is_discrete else regressors
+    i = 0
+    for ci in ci_estimator_list:
+        is_meta = False
+        if ci in ['sl', 'xl', 'tl']:
+            is_meta = True
+        for model_y in my_list:
+            count = 0
+            for model_t in mt_list:
+                if is_meta and count >= 1:
+                    continue
+                try:
+                    params_model_y = select_classification_hyperparameters(
+                        model_y) if is_discrete else select_regression_hyperparameters(model_y)
+                    params_model_t = select_classification_hyperparameters(
+                        model_t)
+
+                    if len(results_df) > 0:
+                        model_t_params_exists = results_df[
+                            (results_df["model_t"] ==
+                                model_t.__class__.__name__)
+                            & (results_df['data'] == key)
+                        ].any().any()
+                        if model_t_params_exists:
+                            params_model_t = results_df.loc[
+                                (results_df["model_t"] ==
+                                    model_t.__class__.__name__)
+                                & (results_df['data'] == key),
+                                'best_model_t_params'
+                            ].values[0]
+                            params_model_t = eval(params_model_t)
+                        else:
+                            grid_search_t = GridSearchCV(
+                                model_t, params_model_t, cv=3)
+                            grid_search_t.fit(X, T)
+                            params_model_t = grid_search_t.best_params_
+                    else:
+                        grid_search_t = GridSearchCV(
+                            model_t, params_model_t, cv=3)
+                        grid_search_t.fit(X, T)
+                        params_model_t = grid_search_t.best_params_
+
+                    if len(results_df) > 0:
+                        model_y_params_exists = results_df[
+                            (results_df["model_y"] ==
+                                model_y.__class__.__name__)
+                            & (results_df['data'] == key)
+                        ].any().any()
+
+                        if model_y_params_exists:
+                            params_model_y = results_df.loc[
+                                (results_df["model_y"] ==
+                                    model_y.__class__.__name__)
+                                & (results_df['data'] == key),
+                                'best_model_y_params'
+                            ].values[0]
+                            params_model_y = eval(params_model_y)
+                        else:
+                            grid_search_y = GridSearchCV(
+                                model_y, params_model_y, cv=3)
+                            grid_search_y.fit(X, Y)
+                            params_model_y = grid_search_y.best_params_
+                    else:
+                        grid_search_y = GridSearchCV(
+                            model_y, params_model_y, cv=3)
+                        grid_search_y.fit(X, Y)
+                        params_model_y = grid_search_y.best_params_
+
+                    model_t.set_params(**params_model_t)
+                    model_y.set_params(**params_model_y)
+                    causal_model = get_estimators(
+                        ci, model_y, model_t)
+                    exists = False
+                    if os.path.exists(results_file):
+                        if is_meta:
+                            exists = results_df[
+                                (results_df["model_y"] ==
+                                    model_y.__class__.__name__)
+                                & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                            ].any().any()
+                        else:
+                            exists = results_df[
+                                (results_df["model_y"] ==
+                                    model_y.__class__.__name__)
+                                & (results_df["model_t"] == model_t.__class__.__name__)
+                                & (results_df["causal_model_name"] == causal_model.__class__.__name__)
+                            ].any().any()
+                    if exists:
+                        print(
+                            f"Skipping model_y: {model_y}, model_t: {model_t}, str_causal_model: {ci}")
+                        continue
+                    temp_results, estimated_ite_values = causal_inference_analysis(
+                        model_y, model_t, causal_model, x_scaled, Y, T, true_ATE, true_ATE_stderr, true_ite, is_meta)
+                    temp_results['data'] = key
+                    temp_results['best_model_y_params'] = params_model_y
+                    temp_results['best_model_t_params'] = params_model_t
+                    all_results.append(temp_results)
+                    print(temp_results, estimated_ite_values)
+                    results_df = pd.DataFrame(all_results)
+
+                except Exception as e:
+                    print(
+                        f"Error occurred while running {model_y}-{model_t} estimator with {str_causal_model} method: {str(e)}")
+                i += 1
+                count += 1
+    results_df.to_csv(f"results/{key}_before_crossfit_params_new.csv")
+
+
+if __name__ == "__main__":
+    classifiers = [RandomForestClassifier(),
+                   LogisticRegressionCV(),
+                   MLPClassifier(), 
+                   GradientBoostingRegressor()]
+
+    regressors = [RandomForestRegressor(),
+                  ElasticNetCV(),
+                  MLPRegressor(), 
+                  GradientBoostingClassifier()]

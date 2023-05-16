@@ -1,0 +1,38 @@
+Estimator,Fold,model_y,model_t,MSE,Runtime,Best first-stage models Mse,Best first-stage models Runtime,Best Mse,Best Runtime,Total Runtime
+tl,0,"ElasticNetCV(l1_ratio=0.1, max_iter=100)","LogisticRegressionCV(Cs=1, max_iter=25)",0.4155373715483515,1.5810294151306152,,,,
+tl,1,"RandomForestRegressor(max_depth=50, n_estimators=25)","RandomForestClassifier(min_samples_leaf=2, n_estimators=25)",0.49394346666666666,1.6309983730316162,,,,
+tl,2,GradientBoostingRegressor(),"GradientBoostingClassifier(learning_rate=0.05, n_estimators=500)",0.554345576608735,5.225521087646484,,,,
+tl,3,"MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)","MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",11365.66428637966,0.5549981594085693,,,,
+tl,"Best Mse, Runtime Fold - 0, 3",,,,,"ElasticNetCV(l1_ratio=0.1, max_iter=100)
+
+","MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)
+
+",0.4155373715483515,0.5549981594085693
+dml,0,"ElasticNetCV(l1_ratio=0.1, max_iter=100)","LogisticRegressionCV(Cs=1, max_iter=25)",0.9048588567240359,1139.5262081623077,,,,
+dml,1,"RandomForestRegressor(max_depth=50, n_estimators=25)","RandomForestClassifier(min_samples_leaf=2, n_estimators=25)",0.8911344639423974,418.7492165565491,,,,
+dml,2,GradientBoostingRegressor(),"GradientBoostingClassifier(learning_rate=0.05, n_estimators=500)",1.0474076331085618,1174.658042192459,,,,
+dml,3,"MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)","MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",2099538903.3780572,38.13436675071716,,,,
+dml,"Best Mse, Runtime Fold - 1, 3",,,,,"RandomForestRegressor(max_depth=50, n_estimators=25)
+
+RandomForestClassifier(min_samples_leaf=2, n_estimators=25)","MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)
+
+MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",0.8911344639423974,38.13436675071716
+kernel_dml,0,"ElasticNetCV(l1_ratio=0.1, max_iter=100)","LogisticRegressionCV(Cs=1, max_iter=25)",0.5034767268830643,2.258289337158203,,,,
+kernel_dml,1,"RandomForestRegressor(max_depth=50, n_estimators=25)","RandomForestClassifier(min_samples_leaf=2, n_estimators=25)",0.53178286638693,2.016991138458252,,,,
+kernel_dml,2,GradientBoostingRegressor(),"GradientBoostingClassifier(learning_rate=0.05, n_estimators=500)",0.5779885374717438,31.37980031967163,,,,
+kernel_dml,3,"MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)","MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",0.6906666666666667,1.1391122341156006,,,,
+kernel_dml,"Best Mse, Runtime Fold - 0, 3",,,,,"ElasticNetCV(l1_ratio=0.1, max_iter=100)
+
+LogisticRegressionCV(Cs=1, max_iter=25)","MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)
+
+MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",0.5034767268830643,1.1391122341156006
+CausalForestDML,0,"ElasticNetCV(l1_ratio=0.1, max_iter=100)","LogisticRegressionCV(Cs=1, max_iter=25)",0.4899058176365281,4.015418767929077,,,,
+CausalForestDML,1,"RandomForestRegressor(max_depth=50, n_estimators=25)","RandomForestClassifier(min_samples_leaf=2, n_estimators=25)",0.48734413260551385,3.44799542427063,,,,
+CausalForestDML,2,GradientBoostingRegressor(),"GradientBoostingClassifier(learning_rate=0.05, n_estimators=500)",0.5181302919702125,32.76731061935425,,,,
+CausalForestDML,3,"MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)","MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",37.50942091150625,3.00749135017395,,,,
+CausalForestDML,"Best Mse, Runtime Fold - 1, 3",,,,,"RandomForestRegressor(max_depth=50, n_estimators=25)
+
+RandomForestClassifier(min_samples_leaf=2, n_estimators=25)","MLPRegressor(alpha=0.01, learning_rate='adaptive', max_iter=25)
+
+MLPClassifier(alpha=0.01, learning_rate='adaptive', max_iter=25)",0.48734413260551385,3.00749135017395
+,,,,,,,,,,3391.488437652588
